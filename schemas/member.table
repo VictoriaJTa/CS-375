@@ -1,0 +1,20 @@
+CREATE TABLE member (
+  id VARCHAR(8) PRIMARY KEY,
+  title VARCHAR(128),
+  apiURI VARCHAR(512),
+  firstName VARCHAR(128),
+  lastName VARCHAR(128),
+  birthDate DATE,
+  gender CHAR(1),
+  party CHAR(1),
+  leadershipRole VARCHAR(128),
+  twitter VARCHAR(128),
+  URL VARCHAR(512),
+  inOffice BOOLEAN,
+  nextElection INT,
+  state CHAR(2),
+  district INT,
+  atLarge BOOLEAN,
+  chamber VARCHAR(16),
+  congress INT
+);
