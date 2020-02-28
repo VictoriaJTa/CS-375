@@ -1,0 +1,22 @@
+CREATE TABLE bill (
+  id VARCHAR(16) PRIMARY KEY,
+  slug VARCHAR(16),
+  congress INT,
+  bill VARCHAR(16),
+  type VARCHAR(8),
+  uri VARCHAR(128),
+  title LONGTEXT,
+  shortTitle TEXT,
+  sponsorID VARCHAR(8),
+  introduced DATE,
+  active BOOLEAN,
+  lastVote DATE,
+  housePassage DATE,
+  senatePassage DATE,
+  enacted DATE,
+  vetoed DATE,
+  primarySubject TEXT,
+  summary LONGTEXT,
+  shortSummary LONGTEXT,
+  FOREIGN KEY(sponsorID) REFERENCES member(id)
+);
