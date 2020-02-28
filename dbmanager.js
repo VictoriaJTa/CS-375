@@ -4,7 +4,7 @@ const fs = require('fs');
 class DBManager {
   constructor(config) {
     // The list of tables needed
-    this.tables = ['member', 'bill'];
+    this.tables = ['member', 'bill', 'vote'];
 
     // A connection to the database
     this.con = mysql.createConnection(config);
@@ -51,7 +51,8 @@ class DBManager {
     switch(tableName) {
       case 'member':
       case 'bill':
-        console.log('Attempting to create member table');
+      case 'vote':
+        console.log(`Attempting to create ${tableName} table`);
         fs.readFile(`schemas/${tableName}.table`, 'utf8', (err, data) => {
           if (err) throw err;
           manager.con.query(data, function(err, res) {

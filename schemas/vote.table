@@ -1,0 +1,14 @@
+CREATE TABLE vote (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  congress INT,
+  chamber VARCHAR(8),
+  session INT,
+  rollCall INT,
+  billID VARCHAR(16),
+  question TEXT,
+  description LONGTEXT,
+  type VARCHAR(16),
+  datetime DATETIME,
+  result TEXT,
+  FOREIGN KEY(billID) REFERENCES bill(id)
+);
