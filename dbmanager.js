@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const fs = require('fs');
+const request = require('request');
 
 class DBManager {
   constructor(config) {
@@ -48,6 +49,8 @@ class DBManager {
    */
   createTable(tableName) {
     let manager = this;
+
+    // Create tables
     switch(tableName) {
       case 'member':
       case 'bill':
@@ -66,6 +69,46 @@ class DBManager {
         console.log(`Attemting to create unrecognized table: ${tableName}`);
         break;
     }
+
+    // Populate tables
+    switch(tableName) {
+      case 'member':
+        this.populateMembers('116', 'senate');
+        this.populateMembers('116', 'house');
+        break;
+      default:
+        break;
+    }
+  }
+
+  populateMembers(congress, chamber) {
+    const options = {
+      url: `https://api.propublica.org/congress/v1/${congress}/${chamber}/members.json`,
+      headers: {
+        'X-API-Key': 'NZYsU28NjeOEIMSEad1b67YQZdHfrBMOOQo9WXz5'
+      }
+    }
+
+    let manager = this;
+    request(options, (err, response, body) => {
+      if (err) throw err;
+      if (response.statusCode == 200) {
+        let data = JSON.parse(body);
+        data.results[0].members.forEach((item, i) => {
+          if (item.in_office) {
+            let district = isNaN(item.district) ? null : item.district;
+            let atLarge = item.at_large ? item.at_large : null;
+            let party = item.party == 'ID' ? 'I' : item.party;
+
+            let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
+                          VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress});`
+            manager.con.query(query, (err, res) => {
+              if (err) throw err;
+            });
+          }
+        });
+      }
+    });
   }
 }
 
