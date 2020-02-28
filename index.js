@@ -1,23 +1,13 @@
 const express = require('express');
-const mysql = require('mysql');
-const CONFIG = require('./config.json');
+const dbmanager = require('./dbmanager');
 
+const CONFIG = require('./config.json');
+let db = new dbmanager.DBManager(CONFIG);
 
 // Set up basic app
 app = express();
 app.get('/', function(req, res) {
   res.send('Success!');
-});
-
-// Configure basic SQL connection
-let con = mysql.createConnection(CONFIG);
-
-con.connect(function(err) {
-  if (err) {
-    console.log('Error connection to database');
-  } else {
-    console.log('Successfully connected to database!');
-  }
 });
 
 port = 8080;
