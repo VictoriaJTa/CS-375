@@ -81,6 +81,11 @@ class DBManager {
     }
   }
 
+  /**
+   Populates the member database with currently active members
+   @param{congress} String - The current congress (or desired)
+   @param{chamber} String - Which chamber? House or Senate?
+   */
   populateMembers(congress, chamber) {
     const options = {
       url: `https://api.propublica.org/congress/v1/${congress}/${chamber}/members.json`,
