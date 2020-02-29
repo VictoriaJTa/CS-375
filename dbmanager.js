@@ -4,9 +4,6 @@ const request = require('request');
 
 class DBManager {
   constructor(config) {
-    // The list of tables needed
-    this.tables = ['member', 'bill', 'vote', 'membervote'];
-
     // A connection to the database
     this.con = mysql.createConnection(config);
 
@@ -34,11 +31,15 @@ class DBManager {
         names.push(item.Tables_in_billbar);
       });
 
-      manager.tables.forEach((item, i) => {
-        if (!names.includes(item)) {
-          manager.createTable(item);
-        }
-      });
+      if (!names.includes('member')) {
+        manager.createTable('member');
+      } else if (!names.includes('bill')) {
+        manager.createTable('bill');
+      } else if (!names.includes('vote')) {
+        manager.createTable('vote');
+      } else if (!names.includes('membervote')) {
+        manager.createTable('membervote');
+      }
     });
   }
 
@@ -53,32 +54,53 @@ class DBManager {
     // Create tables
     switch(tableName) {
       case 'member':
+        this.createGeneralTable(tableName, this.populateMembers, 'bill');
+        break;
       case 'bill':
+        this.createGeneralTable(tableName, null, 'vote');
+        break;
       case 'vote':
+        this.createGeneralTable(tableName, null, 'membervote');
+        break;
       case 'membervote':
-        console.log(`Attempting to create ${tableName} table`);
-        fs.readFile(`schemas/${tableName}.table`, 'utf8', (err, data) => {
-          if (err) throw err;
-          manager.con.query(data, function(err, res) {
-            if (err) throw err;
-            console.log('Success!')
-          })
-        });
+        this.createGeneralTable(tableName, null, null);
         break;
       default:
-        console.log(`Attemting to create unrecognized table: ${tableName}`);
+        console.log(`Attempting to create unrecognized table: ${tableName}`);
         break;
     }
+  }
 
-    // Populate tables
-    switch(tableName) {
-      case 'member':
-        this.populateMembers('116', 'senate');
-        this.populateMembers('116', 'house');
-        break;
-      default:
-        break;
-    }
+  /**
+   A general function for creating a table and then populating it.
+   It also allows for introducing dependencies so that we can create
+   tables in sequence.
+   @param{tableName} String - The name of the table to create
+   @param{populateFn} Function - The function to call to populate the new table
+   @param{nextTable} String - The name of the next table (if there is one)
+   */
+  createGeneralTable(tableName, populateFn, nextTable) {
+    let manager = this;
+
+    console.log(`Attempting to create ${tableName} table`);
+    fs.readFile(`schemas/${tableName}.table`, 'utf8', (err, data) => {
+      if (err) throw err;
+      manager.con.query(data, function(err, res) {
+        if (err) throw err;
+        console.log('Success!')
+        if (populateFn) populateFn(manager);
+        if (nextTable) manager.createTable(nextTable);
+      })
+    });
+  }
+
+  /**
+   Function for populating the member table
+   @param{manager} DBManager - An instance of this class so we can populate the table
+   */
+  populateMembers(manager) {
+    manager.populateChamber('116', 'senate');
+    manager.populateChamber('116', 'house');
   }
 
   /**
@@ -86,7 +108,7 @@ class DBManager {
    @param{congress} String - The current congress (or desired)
    @param{chamber} String - Which chamber? House or Senate?
    */
-  populateMembers(congress, chamber) {
+  populateChamber(congress, chamber) {
     const options = {
       url: `https://api.propublica.org/congress/v1/${congress}/${chamber}/members.json`,
       headers: {
@@ -106,7 +128,8 @@ class DBManager {
             let party = item.party == 'ID' ? 'I' : item.party;
 
             let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
-                          VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress});`
+                          VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress})
+                          ON DUPLICATE KEY UPDATE title='${item.title}', party='${party}', leadershipRole='${item.leadership_role}', twitter='${item.twitter_account}', URL='${item.url}', inOffice=${item.in_office}, nextElection=${item.next_election}, state='${item.state}', district=${district}, atLarge=${atLarge}, chamber='${chamber}', congress=${congress};`
             manager.con.query(query, (err, res) => {
               if (err) throw err;
             });
