@@ -57,7 +57,7 @@ class DBManager {
         this.createGeneralTable(tableName, this.populateMembers, 'bill');
         break;
       case 'bill':
-        this.createGeneralTable(tableName, null, 'vote');
+        this.createGeneralTable(tableName, this.populateBills, 'vote');
         break;
       case 'vote':
         this.createGeneralTable(tableName, null, 'membervote');
@@ -122,19 +122,69 @@ class DBManager {
       if (response.statusCode == 200) {
         let data = JSON.parse(body);
         data.results[0].members.forEach((item, i) => {
-          if (item.in_office) {
-            let district = isNaN(item.district) ? null : item.district;
-            let atLarge = item.at_large ? item.at_large : null;
-            let party = item.party == 'ID' ? 'I' : item.party;
+          let district = isNaN(item.district) ? null : item.district;
+          let atLarge = item.at_large ? item.at_large : null;
+          let party = item.party == 'ID' ? 'I' : item.party;
 
-            let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
-                          VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress})
-                          ON DUPLICATE KEY UPDATE title='${item.title}', party='${party}', leadershipRole='${item.leadership_role}', twitter='${item.twitter_account}', URL='${item.url}', inOffice=${item.in_office}, nextElection=${item.next_election}, state='${item.state}', district=${district}, atLarge=${atLarge}, chamber='${chamber}', congress=${congress};`
-            manager.con.query(query, (err, res) => {
-              if (err) throw err;
-            });
-          }
+          let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
+                        VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress})
+                        ON DUPLICATE KEY UPDATE title='${item.title}', party=IF(${item.in_office}, '${party}', party), leadershipRole='${item.leadership_role}', twitter='${item.twitter_account}', URL='${item.url}', inOffice=${item.in_office}, nextElection=${item.next_election}, state='${item.state}', district=${district}, atLarge=${atLarge}, chamber='${chamber}', congress=${congress};`
+          manager.con.query(query, (err, res) => {
+            if (err) throw err;
+          });
         });
+      }
+    });
+  }
+
+  populateBills(manager) {
+    let congress = '116';
+    let chamber = 'both';
+    let types = ['introduced', 'updated', 'active', 'passed', 'enacted', 'vetoed'];
+    let offset = 0;
+
+    types.forEach((item, i) => {
+      manager.populateBillChunk(chamber, congress, item, offset);
+    });
+  }
+
+  populateBillChunk(chamber, congress, type, offset) {
+    const options = {
+      url: `https://api.propublica.org/congress/v1/${congress}/${chamber}/bills/${type}.json?offset=${offset*20}`,
+      headers: {
+        'X-API-Key': 'NZYsU28NjeOEIMSEad1b67YQZdHfrBMOOQo9WXz5'
+      }
+    }
+
+    let manager = this;
+    request(options, (err, response, body) => {
+      if (err) throw err;
+      if (response.statusCode == 200) {
+        let data = JSON.parse(body)['results'][0]['bills'];
+        data.forEach((item, i) => {
+          let intro = item.introduced_date ? `"${item.introduced_date}"` : null;
+          let veto = item.vetoed ? `"${item.vetoed}"` : null;
+          let enact = item.enacted ? `"${item.enacted}"` : null;
+          let last = item.last_vote ? `"${item.last_vote}"` : null;
+          let house = item.house_passage ? `"${item.house_passage}"` : null;
+          let senate = item.senate_passage ? `"${item.senate_passage}"` : null;
+          let title = `${JSON.stringify(item.title)}`;
+          let sTitle = `${JSON.stringify(item.short_title)}`;
+          let sum = `${JSON.stringify(item.summary)}`;
+          let sSum = `${JSON.stringify(item.summary_short)}`;
+          let subj = `${JSON.stringify(item.primary_subject)}`;
+
+          let query = `INSERT INTO bill( id, slug, congress, bill, type, uri, title, shortTitle, sponsorID, introduced, active, lastVote, housePassage, senatePassage, enacted, vetoed, primarySubject, summary, shortSummary )
+                        VALUES('${item.bill_id}', '${item.bill_slug}', ${congress}, '${item.number}', '${item.bill_type}', '${item.bill_uri}', ${title}, ${sTitle}, '${item.sponsor_id}', ${intro}, ${item.active}, ${last}, ${house}, ${senate}, ${enact}, ${veto}, ${subj}, ${sum}, ${sSum})
+                        ON DUPLICATE KEY UPDATE title=${title}, shortTitle=${sTitle}, introduced=${intro}, active=${item.active}, lastVote=${last}, housePassage=${house}, senatePassage=${senate}, enacted=${enact}, vetoed=${veto}, primarySubject=${subj}, summary=${sum}, shortSummary=${sSum};`
+          manager.con.query(query, (err, res) => {
+            if (err) throw err;
+          });
+        });
+
+        if (data.length == 20) {
+          manager.populateBillChunk(chamber, congress, type, offset+1);
+        }
       }
     });
   }
