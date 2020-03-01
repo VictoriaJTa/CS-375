@@ -39,6 +39,11 @@ class DBManager {
         manager.createTable('vote');
       } else if (!names.includes('membervote')) {
         manager.createTable('membervote');
+      } else {
+        manager.updateData(manager);
+        setInterval(() => {
+          manager.updateData(manager);
+        }, 1000 * 60 * 60);
       }
     });
   }
@@ -63,7 +68,12 @@ class DBManager {
         this.createGeneralTable(tableName, this.populateVotes, 'membervote');
         break;
       case 'membervote':
-        this.createGeneralTable(tableName, this.populateMemberVotes, null);
+        this.createGeneralTable(tableName, (managaer) => {
+          manager.updateData(manager);
+          setInterval(() => {
+            manager.updateData(manager);
+          }, 1000 * 60 * 60);
+        }, null);
         break;
       default:
         console.log(`Attempting to create unrecognized table: ${tableName}`);
@@ -309,6 +319,22 @@ class DBManager {
         });
       }
     });
+  }
+
+  updateData(manager) {
+    console.log('Updating database content!');
+
+    // Update Member data
+    manager.populateMembers(manager);
+
+    // Update bill data
+    manager.populateBills(manager);
+
+    // Update votes that have taken place
+    manager.populateVotes(manager);
+
+    // Update vote data
+    manager.populateMemberVotes(manager);
   }
 
 }
