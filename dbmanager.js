@@ -63,7 +63,7 @@ class DBManager {
         this.createGeneralTable(tableName, this.populateVotes, 'membervote');
         break;
       case 'membervote':
-        this.createGeneralTable(tableName, null, null);
+        this.createGeneralTable(tableName, this.populateMemberVotes, null);
         break;
       default:
         console.log(`Attempting to create unrecognized table: ${tableName}`);
@@ -260,6 +260,57 @@ class DBManager {
       }
     });
   }
+
+  populateMemberVotes(manager) {
+    // Collect all vote IDs we have in our DB
+    let query = 'SELECT * FROM vote;';
+    manager.con.query(query, (err, res) => {
+      if (err) throw err;
+      res.forEach((item, i) => {
+        // Check if we have recorded votes in our DB for this ID
+        let innerQ = `SELECT * FROM membervote WHERE voteID = ${JSON.stringify(item.id)};`
+        manager.con.query(innerQ, (err, res) => {
+          if (err) throw err;
+
+          if (res.length > 0) {
+            // Found some votes. Assume we have them all
+          } else {
+            manager.populateSpecficVote(manager, item.congress, item.chamber, item.session, item.rollCall, item.id);
+          }
+        })
+      });
+    });
+  }
+
+  populateSpecficVote(manager, congress, chamber, session, rollcall, voteID) {
+    const options = {
+      url: `https://api.propublica.org/congress/v1/${congress}/${chamber}/sessions/${session}/votes/${rollcall}.json`,
+      headers: {
+        'X-API-Key': 'NZYsU28NjeOEIMSEad1b67YQZdHfrBMOOQo9WXz5'
+      }
+    }
+
+    request(options, (err, response, body) => {
+      if (err) throw err;
+      if (response.statusCode == 200) {
+        let data = JSON.parse(body)['results']['votes']['vote'];
+        data['positions'].forEach((item, i) => {
+          let id = voteID + item.member_id;
+          let vid = voteID;
+          let bid = data['bill']['bill_id'];
+          let mid = item.member_id;
+          let pos = item.vote_position;
+
+          let query = `INSERT IGNORE INTO membervote(id, voteID, billID, memberID, votePosition)
+                        VALUES('${id}', '${vid}', '${bid}', '${mid}', '${pos}');`;
+          manager.con.query(query, (err, res) => {
+            if (err) throw err;
+          });
+        });
+      }
+    });
+  }
+
 }
 
 module.exports = {
