@@ -60,7 +60,7 @@ class DBManager {
         this.createGeneralTable(tableName, this.populateBills, 'vote');
         break;
       case 'vote':
-        this.createGeneralTable(tableName, null, 'membervote');
+        this.createGeneralTable(tableName, this.populateVotes, 'membervote');
         break;
       case 'membervote':
         this.createGeneralTable(tableName, null, null);
@@ -185,6 +185,78 @@ class DBManager {
         if (data.length == 20) {
           manager.populateBillChunk(chamber, congress, type, offset+1);
         }
+      }
+    });
+  }
+
+  populateVotes(manager) {
+    function pad(num, size){ return ('000000000' + num).substr(-size); }
+    let monthA = 1;
+    let monthB = 1;
+    let year = 2020;
+    let dayA = 1;
+    let dayB = 7;
+
+    let monthLimit = 13;
+    while (monthB != monthLimit) {
+      let from = `${year}-${pad(monthA, 2)}-${pad(dayA, 2)}`;
+      let to = `${year}-${pad(monthB, 2)}-${pad(dayB, 2)}`;
+
+      manager.populateVoteRange('house', from, to);
+      manager.populateVoteRange('senate', from, to);
+
+      dayA = dayB;
+      dayB = dayB + 7;
+      if (dayB > 28) {
+        dayB = 1;
+        monthB = monthB + 1;
+      } else if (monthA != monthB) {
+        dayA = 1;
+        monthA = monthB;
+      }
+    }
+
+    monthB = monthLimit - 1;
+    dayB = 31;
+
+    let from = `${year}-${pad(monthA, 2)}-${pad(dayA, 2)}`;
+    let to = `${year}-${pad(monthB, 2)}-${pad(dayB, 2)}`;
+
+    manager.populateVoteRange('house', from, to);
+    manager.populateVoteRange('senate', from, to);
+  }
+
+  populateVoteRange(chamber, start, end) {
+    const options = {
+      url: `https://api.propublica.org/congress/v1/${chamber}/votes/${start}/${end}.json`,
+      headers: {
+        'X-API-Key': 'NZYsU28NjeOEIMSEad1b67YQZdHfrBMOOQo9WXz5'
+      }
+    }
+
+    let manager = this;
+    request(options, (err, response, body) => {
+      if (err) throw err;
+      if (response.statusCode == 200) {
+        let data = JSON.parse(body)['results']['votes'];
+
+        data.forEach((item, i) => {
+          let question = JSON.stringify(item.question);
+          let desc = JSON.stringify(item.description);
+          let type = JSON.stringify(item.vote_type);
+          let datetime = JSON.stringify(item.date + ' ' + item.time);
+          let billID = JSON.stringify(item.bill.bill_id);
+          let vID = JSON.stringify(`${item.bill.bill_id}_${item.roll_call}`)
+
+
+          if (!type.includes("QUORUM") && item.bill.bill_id) {
+            let query = `INSERT IGNORE INTO vote( id, congress, chamber, session, rollCall, billID, question, description, type, datetime, result )
+                          VALUES('${vID}', ${item.congress}, '${chamber}', ${item.session}, ${item.roll_call}, ${billID}, ${question}, ${desc}, ${type}, ${datetime}, '${item.result}');`
+            manager.con.query(query, (err, res) => {
+              if (err) throw err;
+            });
+          }
+        });
       }
     });
   }
