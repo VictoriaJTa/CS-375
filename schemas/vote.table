@@ -1,5 +1,5 @@
 CREATE TABLE vote (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id VARCHAR(32) PRIMARY KEY,
   congress INT,
   chamber VARCHAR(8),
   session INT,

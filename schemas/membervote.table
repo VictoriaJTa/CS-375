@@ -1,8 +1,10 @@
 CREATE TABLE membervote (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id VARCHAR(32) PRIMARY KEY,
+  voteID VARCHAR(32),
   billID VARCHAR(16),
   memberID VARCHAR(8),
   votePosition VARCHAR(16),
+  FOREIGN KEY(voteID) REFERENCES vote(id),
   FOREIGN KEY(billID) REFERENCES bill(id),
   FOREIGN KEY(memberID) REFERENCES member(id)
 );
