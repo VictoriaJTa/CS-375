@@ -4,19 +4,13 @@ const request = require('request');
 
 class DBManager {
   constructor(config) {
-    // A connection to the database
-    this.con = mysql.createConnection(config);
+    // Create pool of connections
+    config.connectionLimit = 40;
+    this.pool = mysql.createPool(config);
 
     // Connect and initialize tables
     let manager = this;
-    this.con.connect(function(err) {
-      if (err) {
-        console.log('Error connection to database');
-      } else {
-        console.log('Successfully connected to database!');
-        manager.initializeTables();
-      }
-    });
+    manager.initializeTables();
   }
 
   /**
@@ -25,26 +19,29 @@ class DBManager {
    */
   initializeTables() {
     let manager = this;
-    this.con.query('SHOW TABLES;', function(err, res) {
-      let names = [];
-      res.forEach((item, i) => {
-        names.push(item.Tables_in_billbar);
-      });
+    this.pool.getConnection((err, con) => {
+      con.query('SHOW TABLES;', function(err, res) {
+        con.release();
+        let names = [];
+        res.forEach((item, i) => {
+          names.push(item.Tables_in_billbar);
+        });
 
-      if (!names.includes('member')) {
-        manager.createTable('member');
-      } else if (!names.includes('bill')) {
-        manager.createTable('bill');
-      } else if (!names.includes('vote')) {
-        manager.createTable('vote');
-      } else if (!names.includes('membervote')) {
-        manager.createTable('membervote');
-      } else {
-        manager.updateData(manager);
-        setInterval(() => {
+        if (!names.includes('member')) {
+          manager.createTable('member');
+        } else if (!names.includes('bill')) {
+          manager.createTable('bill');
+        } else if (!names.includes('vote')) {
+          manager.createTable('vote');
+        } else if (!names.includes('membervote')) {
+          manager.createTable('membervote');
+        } else {
           manager.updateData(manager);
-        }, 1000 * 60 * 60);
-      }
+          setInterval(() => {
+            manager.updateData(manager);
+          }, 60*60*1000);
+        }
+      });
     });
   }
 
@@ -59,21 +56,22 @@ class DBManager {
     // Create tables
     switch(tableName) {
       case 'member':
-        this.createGeneralTable(tableName, this.populateMembers, 'bill');
+        this.createGeneralTable(tableName, 'bill');
         break;
       case 'bill':
-        this.createGeneralTable(tableName, this.populateBills, 'vote');
+        this.createGeneralTable(tableName, 'vote');
         break;
       case 'vote':
-        this.createGeneralTable(tableName, this.populateVotes, 'membervote');
+        this.createGeneralTable(tableName, 'membervote');
         break;
       case 'membervote':
-        this.createGeneralTable(tableName, (managaer) => {
+        this.createGeneralTable(tableName, null);
+        setTimeout(() => {
           manager.updateData(manager);
           setInterval(() => {
             manager.updateData(manager);
-          }, 1000 * 60 * 60);
-        }, null);
+          }, 60*60*1000);
+        }, 10000);
         break;
       default:
         console.log(`Attempting to create unrecognized table: ${tableName}`);
@@ -89,18 +87,20 @@ class DBManager {
    @param{populateFn} Function - The function to call to populate the new table
    @param{nextTable} String - The name of the next table (if there is one)
    */
-  createGeneralTable(tableName, populateFn, nextTable) {
+  createGeneralTable(tableName, nextTable) {
     let manager = this;
 
     console.log(`Attempting to create ${tableName} table`);
     fs.readFile(`schemas/${tableName}.table`, 'utf8', (err, data) => {
       if (err) throw err;
-      manager.con.query(data, function(err, res) {
-        if (err) throw err;
-        console.log('Success!')
-        if (populateFn) populateFn(manager);
-        if (nextTable) manager.createTable(nextTable);
-      })
+      manager.pool.getConnection((err, con) => {
+        con.query(data, function(err, res) {
+          con.release();
+          if (err) throw err;
+          console.log('Success!')
+          if (nextTable) manager.createTable(nextTable);
+        });
+      });
     });
   }
 
@@ -139,8 +139,11 @@ class DBManager {
           let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
                         VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress})
                         ON DUPLICATE KEY UPDATE title='${item.title}', party=IF(${item.in_office}, '${party}', party), leadershipRole='${item.leadership_role}', twitter='${item.twitter_account}', URL='${item.url}', inOffice=${item.in_office}, nextElection=${item.next_election}, state='${item.state}', district=${district}, atLarge=${atLarge}, chamber='${chamber}', congress=${congress};`
-          manager.con.query(query, (err, res) => {
-            if (err) throw err;
+          manager.pool.getConnection((err, con) => {
+            con.query(query, (err, res) => {
+              con.release();
+              if (err) throw err;
+            });
           });
         });
       }
@@ -187,8 +190,11 @@ class DBManager {
           let query = `INSERT INTO bill( id, slug, congress, bill, type, uri, title, shortTitle, sponsorID, introduced, active, lastVote, housePassage, senatePassage, enacted, vetoed, primarySubject, summary, shortSummary )
                         VALUES('${item.bill_id}', '${item.bill_slug}', ${congress}, '${item.number}', '${item.bill_type}', '${item.bill_uri}', ${title}, ${sTitle}, '${item.sponsor_id}', ${intro}, ${item.active}, ${last}, ${house}, ${senate}, ${enact}, ${veto}, ${subj}, ${sum}, ${sSum})
                         ON DUPLICATE KEY UPDATE title=${title}, shortTitle=${sTitle}, introduced=${intro}, active=${item.active}, lastVote=${last}, housePassage=${house}, senatePassage=${senate}, enacted=${enact}, vetoed=${veto}, primarySubject=${subj}, summary=${sum}, shortSummary=${sSum};`
-          manager.con.query(query, (err, res) => {
-            if (err) throw err;
+          manager.pool.getConnection((err, con) => {
+            con.query(query, (err, res) => {
+              con.release();
+              if (err) throw err;
+            });
           });
         });
 
@@ -262,8 +268,11 @@ class DBManager {
           if (!type.includes("QUORUM") && item.bill.bill_id) {
             let query = `INSERT IGNORE INTO vote( id, congress, chamber, session, rollCall, billID, question, description, type, datetime, result )
                           VALUES('${vID}', ${item.congress}, '${chamber}', ${item.session}, ${item.roll_call}, ${billID}, ${question}, ${desc}, ${type}, ${datetime}, '${item.result}');`
-            manager.con.query(query, (err, res) => {
-              if (err) throw err;
+            manager.pool.getConnection((err, con) => {
+              con.query(query, (err, res) => {
+                con.release();
+                if (err) throw err;
+              });
             });
           }
         });
@@ -273,21 +282,27 @@ class DBManager {
 
   populateMemberVotes(manager) {
     // Collect all vote IDs we have in our DB
-    let query = 'SELECT * FROM vote;';
-    manager.con.query(query, (err, res) => {
-      if (err) throw err;
-      res.forEach((item, i) => {
-        // Check if we have recorded votes in our DB for this ID
-        let innerQ = `SELECT * FROM membervote WHERE voteID = ${JSON.stringify(item.id)};`
-        manager.con.query(innerQ, (err, res) => {
-          if (err) throw err;
+    manager.pool.getConnection((err, con) => {
+      let query = 'SELECT * FROM vote;';
+      con.query(query, (err, res) => {
+        con.release();
+        if (err) throw err;
+        res.forEach((item, i) => {
+          manager.pool.getConnection((err, con) => {
+            // Check if we have recorded votes in our DB for this ID
+            let innerQ = `SELECT * FROM membervote WHERE voteID = ${JSON.stringify(item.id)};`
+            con.query(innerQ, (err, res) => {
+              con.release();
+              if (err) throw err;
 
-          if (res.length > 0) {
-            // Found some votes. Assume we have them all
-          } else {
-            manager.populateSpecficVote(manager, item.congress, item.chamber, item.session, item.rollCall, item.id);
-          }
-        })
+              if (res.length > 0) {
+                // Found some votes. Assume we have them all
+              } else {
+                manager.populateSpecficVote(manager, item.congress, item.chamber, item.session, item.rollCall, item.id);
+              }
+            });
+          });
+        });
       });
     });
   }
@@ -313,8 +328,11 @@ class DBManager {
 
           let query = `INSERT IGNORE INTO membervote(id, voteID, billID, memberID, votePosition)
                         VALUES('${id}', '${vid}', '${bid}', '${mid}', '${pos}');`;
-          manager.con.query(query, (err, res) => {
-            if (err) throw err;
+          manager.pool.getConnection((err, con) => {
+            con.query(query, (err, res) => {
+              con.release();
+              if (err) throw err;
+            });
           });
         });
       }
