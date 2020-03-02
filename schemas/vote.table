@@ -9,6 +9,5 @@ CREATE TABLE vote (
   description LONGTEXT,
   type VARCHAR(16),
   datetime DATETIME,
-  result TEXT,
-  FOREIGN KEY(billID) REFERENCES bill(id)
+  result TEXT
 );
