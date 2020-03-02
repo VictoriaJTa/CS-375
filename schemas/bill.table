@@ -17,6 +17,5 @@ CREATE TABLE bill (
   vetoed DATE,
   primarySubject TEXT,
   summary LONGTEXT,
-  shortSummary LONGTEXT,
-  FOREIGN KEY(sponsorID) REFERENCES member(id)
+  shortSummary LONGTEXT
 );
