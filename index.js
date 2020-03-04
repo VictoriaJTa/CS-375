@@ -14,15 +14,15 @@ app.get('/', function(req, res) {
 
 // Bill endpoint
 app.get('/bill', function(req, res) {
-	let id;
-	if (req.query.id) {
-		id = req.query.id;
+	let filters;
+	if (req.query) {
+		filters = req.query;
 	} else {
-		id = null;
+		filters = null;
 	}
 
 	db.pool.getConnection(function(err, conn) {
-		billmod.bill(conn, id, function (value, rows) {
+		billmod.bill(conn, req.query, function (value, rows) {
 			if (value < 0) {
 				console.log('Error while trying to retrieve billss.');
 				res.send('Error: Issue while trying to retrieve bills.');
@@ -41,25 +41,31 @@ app.get('/bill', function(req, res) {
 						case 'hr': 			type = 'house-bill'; break;
 						default: 			type = 'senate-bill'; break;
 					}
-					let code = row.bill.substring(row.bill.lastIndexOf('.') + 1);
-					let congress_gov_uri = `https://www.congress.gov/bill/${congress}-congress/${type}/${code}`;
+					let code = row.bill.substring(row.bill.lastIndexOf('.') + 1);	// All bill names formatted as x.x.<code>
+					let congress_gov_uri = `https://www.congress.gov/bill/${congress}th-congress/${type}/${code}`;					
 
 					data.bills.push({
+						id: row.id,
 						bill: row.bill,
 						short_title: row.shortTitle,
 						summary: row.summary,
+						active: row.active,
+						vetoed: row.vetoed,
+						enacted: row.enacted,
+						last_vote: row.lastVote,
+						house_passage: row.housePassage,
+						senate_passage: row.senatePassage,
 						sponsor_first_name: row.firstName,
 						sponosor_last_name: row.lastName,
 						sponsor_party: row.party,
 						sponsor_state: row.state,
-						chamber: row.chamber,
-						congress_gov_uri: congress_gov_uri,
+						chamber: row.chamber,				
+						congress_gov_uri: congress_gov_uri				
 					});
-				}
-
+				}				
 				res.send(data);
 			}
-		})
+		}, filters);
 	});
 })
 
