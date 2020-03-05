@@ -50,6 +50,7 @@ app.get('/bill', function(req, res) {
 						bill: row.bill,
 						short_title: row.shortTitle,
 						summary: row.summary,
+						introduced: row.introduced,
 						active: row.active,
 						vetoed: row.vetoed,
 						enacted: row.enacted,

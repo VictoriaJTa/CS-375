@@ -13,12 +13,7 @@ function getStatus(status) {
 
 		let fullDate = `${year}-${month}-${day}`;				
 
-		statuses.push({
-			table: 'member',
-			column: 'congress',
-			value: [116],
-			type: 0
-		});
+		statuses.push({ table: 'member', column: 'congress', value: [116], type: 0 });
 	}
 
 	if (status.includes('active')) {		
@@ -35,8 +30,14 @@ function getStatus(status) {
 	}
 
 	if (status.includes('updated')) {	
-		statuses.push({ table: 'bill', column: 'lastVote', value: ['2019-01-02'], type: 1 });	
-		statuses.push({ table: 'member', column: 'congress', value: [116], type: 2 });	
+		statuses.push({
+			type: 4,
+			is_or: false,
+			value: [
+				{ table: 'bill', column: 'lastVote', value: ['2019-01-02'], type: 1 },
+				{ table: 'member', column: 'congress', value: [116], type: 2 }
+			]
+		});
 	}
 
 	if (status.includes('vetoed')) {
@@ -61,7 +62,7 @@ function processFilters(conn, filters, is_or = false) {
 			clause += `${filter.table}.${filter.column} IS NOT NULL`;			
 		} else if (filter.type === 4) {		// type 4 = combo conditions
 			let subfilters = filter.value;
-			let subclause = processFilters(conn, subfilters, true);
+			let subclause = processFilters(conn, subfilters, subfilters.is_or);
 
 			clause += `(${subclause})`;
 		} else {							// type 0 = equality condition
@@ -125,7 +126,7 @@ function getClause(conn, filters) {
 		if (sharedcol.includes(column)) {
 			if (column === 'status') {
 				let statuses = getStatus(value);
-				formatted.push({ type: 4, value: statuses });
+				formatted.push({ type: 4, is_or: true, value: statuses });
 			}
 		}
 	}
@@ -143,7 +144,7 @@ function bill(conn, filters, next) {
 		where += `WHERE ${clause}`;
 	}
 
-	const query =  `SELECT bill.id, bill.bill, bill.shortTitle, bill.summary, bill.type, bill.congress, bill.senatePassage, bill.housePassage, bill.active, bill.vetoed, bill.enacted, bill.lastVote, 
+	const query =  `SELECT bill.id, bill.bill, bill.shortTitle, bill.summary, bill.type, bill.congress, bill.senatePassage, bill.housePassage, bill.active, bill.vetoed, bill.enacted, bill.lastVote, bill.introduced, 
 						member.firstName, member.lastName, member.party, member.state, member.chamber
 					FROM bill
 						INNER JOIN member ON member.id = bill.sponsorID
