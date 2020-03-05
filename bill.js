@@ -99,7 +99,7 @@ function getClause(conn, filters) {
 	for (let filter of Object.keys(filters)) {	
 		// Tables to search for based on the filter
 		const billcol = ['id', 'lastVote', 'dateMin', 'dateMax'];
-		const membercol = ['chamber'];
+		const membercol = ['chamber', 'party'];
 		const sharedcol = ['status'];
 
 		let column = filter;
