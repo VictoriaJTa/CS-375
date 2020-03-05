@@ -1,3 +1,4 @@
+//	Get status filters
 function getStatus(status) {
 	let statuses = [];
 
@@ -25,12 +26,12 @@ function getStatus(status) {
 	}
 
 	if (status.includes('passed')) {
-		statuses.push({ table: 'bill', column: 'housePassage', value: [], type: 3 });
-		statuses.push({ table: 'bill', column: 'senatePassage',	value: [], type: 3 });
+		statuses.push({ table: 'bill', column: 'housePassage', type: 3 });
+		statuses.push({ table: 'bill', column: 'senatePassage',	type: 3 });
 	}
 
 	if (status.includes('enacted')) {
-		statuses.push({ table: 'bill', column: 'enacted', value: [], type: 3 });
+		statuses.push({ table: 'bill', column: 'enacted', type: 3 });
 	}
 
 	if (status.includes('updated')) {	
@@ -39,30 +40,31 @@ function getStatus(status) {
 	}
 
 	if (status.includes('vetoed')) {
-		statuses.push({ table: 'bill', column: 'vetoed', value: [], type: 3 });	
+		statuses.push({ table: 'bill', column: 'vetoed', type: 3 });	
 	}	
 
 	return statuses;
 }
 
+// Process filters by type
 function processFilters(conn, filters, is_or = false) {
 	let clause = '';
 
 	for (let i=0; i<filters.length; i++) {
 		let filter = filters[i];
 
-		if (filter.type === 1) {
+		if (filter.type === 1) {			// type 1 = less than condition
 			clause += `${filter.table}.${filter.column} > ${conn.escape(filter.value[0])}`;
-		} else if (filter.type === 2) {
+		} else if (filter.type === 2) {		// type 2 = greater than condition
 			clause += `${filter.table}.${filter.column} < ${conn.escape(filter.value[0])}`;
-		} else if (filter.type === 3) {
+		} else if (filter.type === 3) {		// type 3 = IS NOT NULL
 			clause += `${filter.table}.${filter.column} IS NOT NULL`;			
-		} else if (filter.type === 4) {		// Differing values
+		} else if (filter.type === 4) {		// type 4 = combo conditions
 			let subfilters = filter.value;
 			let subclause = processFilters(conn, subfilters, true);
 
 			clause += `(${subclause})`;
-		} else {
+		} else {							// type 0 = equality condition
 			let group = '';
 			for (let j=0; j<filter.value.length; j++) {
 				group += `${filter.table}.${filter.column} = ${conn.escape(filter.value[j])}`;			
@@ -95,6 +97,7 @@ function getClause(conn, filters) {
 
 	let formatted = [];
 	for (let filter of Object.keys(filters)) {	
+		// Tables to search for based on the filter
 		const billcol = ['id', 'lastVote', 'dateMin', 'dateMax'];
 		const membercol = ['chamber'];
 		const sharedcol = ['status'];

@@ -44,6 +44,7 @@ app.get('/bill', function(req, res) {
 					let code = row.bill.substring(row.bill.lastIndexOf('.') + 1);	// All bill names formatted as x.x.<code>
 					let congress_gov_uri = `https://www.congress.gov/bill/${congress}th-congress/${type}/${code}`;					
 
+					// Pushes data to the array; can opt to remove fields if desired
 					data.bills.push({
 						id: row.id,
 						bill: row.bill,
