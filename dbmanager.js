@@ -128,24 +128,28 @@ class DBManager {
 
     let manager = this;
     request(options, (err, response, body) => {
-      if (err) throw err;
-      if (response.statusCode == 200) {
-        let data = JSON.parse(body);
-        data.results[0].members.forEach((item, i) => {
-          let district = isNaN(item.district) ? null : item.district;
-          let atLarge = item.at_large ? item.at_large : null;
-          let party = item.party == 'ID' ? 'I' : item.party;
+      if (err) {
+        console.log(`API timeout`);
+        console.log(err);
+      } else {
+        if (response.statusCode == 200) {
+          let data = JSON.parse(body);
+          data.results[0].members.forEach((item, i) => {
+            let district = isNaN(item.district) ? null : item.district;
+            let atLarge = item.at_large ? item.at_large : null;
+            let party = item.party == 'ID' ? 'I' : item.party;
 
-          let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
-                        VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress})
-                        ON DUPLICATE KEY UPDATE title='${item.title}', party=IF(${item.in_office}, '${party}', party), leadershipRole='${item.leadership_role}', twitter='${item.twitter_account}', URL='${item.url}', inOffice=${item.in_office}, nextElection=${item.next_election}, state='${item.state}', district=${district}, atLarge=${atLarge}, chamber='${chamber}', congress=${congress};`
-          manager.pool.getConnection((err, con) => {
-            con.query(query, (err, res) => {
-              con.release();
-              if (err) throw err;
+            let query = `INSERT INTO member( id, title, apiURI, firstName, lastName, birthDate, gender, party, leadershipRole, twitter, URL, inOffice, nextElection, state, district, atLarge, chamber, congress)
+                          VALUES('${item.id}', '${item.title}', '${item.api_uri}', "${item.first_name}", "${item.last_name}", '${item.date_of_birth}', '${item.gender}', '${party}', '${item.leadership_role}', '${item.twitter_account}', '${item.url}', ${item.in_office}, ${item.next_election}, '${item.state}', ${district}, ${atLarge}, '${chamber}', ${congress})
+                          ON DUPLICATE KEY UPDATE title='${item.title}', party=IF(${item.in_office}, '${party}', party), leadershipRole='${item.leadership_role}', twitter='${item.twitter_account}', URL='${item.url}', inOffice=${item.in_office}, nextElection=${item.next_election}, state='${item.state}', district=${district}, atLarge=${atLarge}, chamber='${chamber}', congress=${congress};`
+            manager.pool.getConnection((err, con) => {
+              con.query(query, (err, res) => {
+                con.release();
+                if (err) throw err;
+              });
             });
           });
-        });
+        }
       }
     });
   }
@@ -171,35 +175,39 @@ class DBManager {
 
     let manager = this;
     request(options, (err, response, body) => {
-      if (err) throw err;
-      if (response.statusCode == 200) {
-        let data = JSON.parse(body)['results'][0]['bills'];
-        data.forEach((item, i) => {
-          let intro = item.introduced_date ? `"${item.introduced_date}"` : null;
-          let veto = item.vetoed ? `"${item.vetoed}"` : null;
-          let enact = item.enacted ? `"${item.enacted}"` : null;
-          let last = item.last_vote ? `"${item.last_vote}"` : null;
-          let house = item.house_passage ? `"${item.house_passage}"` : null;
-          let senate = item.senate_passage ? `"${item.senate_passage}"` : null;
-          let title = `${JSON.stringify(item.title)}`;
-          let sTitle = `${JSON.stringify(item.short_title)}`;
-          let sum = `${JSON.stringify(item.summary)}`;
-          let sSum = `${JSON.stringify(item.summary_short)}`;
-          let subj = `${JSON.stringify(item.primary_subject)}`;
+      if (err) {
+        console.log(`API timeout`);
+        console.log(err);
+      } else {
+        if (response.statusCode == 200) {
+          let data = JSON.parse(body)['results'][0]['bills'];
+          data.forEach((item, i) => {
+            let intro = item.introduced_date ? `"${item.introduced_date}"` : null;
+            let veto = item.vetoed ? `"${item.vetoed}"` : null;
+            let enact = item.enacted ? `"${item.enacted}"` : null;
+            let last = item.last_vote ? `"${item.last_vote}"` : null;
+            let house = item.house_passage ? `"${item.house_passage}"` : null;
+            let senate = item.senate_passage ? `"${item.senate_passage}"` : null;
+            let title = `${JSON.stringify(item.title)}`;
+            let sTitle = `${JSON.stringify(item.short_title)}`;
+            let sum = `${JSON.stringify(item.summary)}`;
+            let sSum = `${JSON.stringify(item.summary_short)}`;
+            let subj = `${JSON.stringify(item.primary_subject)}`;
 
-          let query = `INSERT INTO bill( id, slug, congress, bill, type, uri, title, shortTitle, sponsorID, introduced, active, lastVote, housePassage, senatePassage, enacted, vetoed, primarySubject, summary, shortSummary )
-                        VALUES('${item.bill_id}', '${item.bill_slug}', ${congress}, '${item.number}', '${item.bill_type}', '${item.bill_uri}', ${title}, ${sTitle}, '${item.sponsor_id}', ${intro}, ${item.active}, ${last}, ${house}, ${senate}, ${enact}, ${veto}, ${subj}, ${sum}, ${sSum})
-                        ON DUPLICATE KEY UPDATE title=${title}, shortTitle=${sTitle}, introduced=${intro}, active=${item.active}, lastVote=${last}, housePassage=${house}, senatePassage=${senate}, enacted=${enact}, vetoed=${veto}, primarySubject=${subj}, summary=${sum}, shortSummary=${sSum};`
-          manager.pool.getConnection((err, con) => {
-            con.query(query, (err, res) => {
-              con.release();
-              if (err) throw err;
+            let query = `INSERT INTO bill( id, slug, congress, bill, type, uri, title, shortTitle, sponsorID, introduced, active, lastVote, housePassage, senatePassage, enacted, vetoed, primarySubject, summary, shortSummary )
+                          VALUES('${item.bill_id}', '${item.bill_slug}', ${congress}, '${item.number}', '${item.bill_type}', '${item.bill_uri}', ${title}, ${sTitle}, '${item.sponsor_id}', ${intro}, ${item.active}, ${last}, ${house}, ${senate}, ${enact}, ${veto}, ${subj}, ${sum}, ${sSum})
+                          ON DUPLICATE KEY UPDATE title=${title}, shortTitle=${sTitle}, introduced=${intro}, active=${item.active}, lastVote=${last}, housePassage=${house}, senatePassage=${senate}, enacted=${enact}, vetoed=${veto}, primarySubject=${subj}, summary=${sum}, shortSummary=${sSum};`
+            manager.pool.getConnection((err, con) => {
+              con.query(query, (err, res) => {
+                con.release();
+                if (err) throw err;
+              });
             });
           });
-        });
 
-        if (data.length == 20) {
-          manager.populateBillChunk(chamber, congress, type, offset+1);
+          if (data.length == 20) {
+            manager.populateBillChunk(chamber, congress, type, offset+1);
+          }
         }
       }
     });
@@ -252,30 +260,34 @@ class DBManager {
 
     let manager = this;
     request(options, (err, response, body) => {
-      if (err) throw err;
-      if (response.statusCode == 200) {
-        let data = JSON.parse(body)['results']['votes'];
+      if (err) {
+        console.log(`API timeout`);
+        console.log(err);
+      } else {
+        if (response.statusCode == 200) {
+          let data = JSON.parse(body)['results']['votes'];
 
-        data.forEach((item, i) => {
-          let question = JSON.stringify(item.question);
-          let desc = JSON.stringify(item.description);
-          let type = JSON.stringify(item.vote_type);
-          let datetime = JSON.stringify(item.date + ' ' + item.time);
-          let billID = JSON.stringify(item.bill.bill_id);
-          let vID = JSON.stringify(`${item.bill.bill_id}_${item.roll_call}`)
+          data.forEach((item, i) => {
+            let question = JSON.stringify(item.question);
+            let desc = JSON.stringify(item.description);
+            let type = JSON.stringify(item.vote_type);
+            let datetime = JSON.stringify(item.date + ' ' + item.time);
+            let billID = JSON.stringify(item.bill.bill_id);
+            let vID = JSON.stringify(`${item.bill.bill_id}_${item.roll_call}`)
 
 
-          if (!type.includes("QUORUM") && item.bill.bill_id) {
-            let query = `INSERT IGNORE INTO vote( id, congress, chamber, session, rollCall, billID, question, description, type, datetime, result )
-                          VALUES('${vID}', ${item.congress}, '${chamber}', ${item.session}, ${item.roll_call}, ${billID}, ${question}, ${desc}, ${type}, ${datetime}, '${item.result}');`
-            manager.pool.getConnection((err, con) => {
-              con.query(query, (err, res) => {
-                con.release();
-                if (err) throw err;
+            if (!type.includes("QUORUM") && item.bill.bill_id) {
+              let query = `INSERT IGNORE INTO vote( id, congress, chamber, session, rollCall, billID, question, description, type, datetime, result )
+                            VALUES('${vID}', ${item.congress}, '${chamber}', ${item.session}, ${item.roll_call}, ${billID}, ${question}, ${desc}, ${type}, ${datetime}, '${item.result}');`
+              manager.pool.getConnection((err, con) => {
+                con.query(query, (err, res) => {
+                  con.release();
+                  if (err) throw err;
+                });
               });
-            });
-          }
-        });
+            }
+          });
+        }
       }
     });
   }
@@ -316,25 +328,29 @@ class DBManager {
     }
 
     request(options, (err, response, body) => {
-      if (err) throw err;
-      if (response.statusCode == 200) {
-        let data = JSON.parse(body)['results']['votes']['vote'];
-        data['positions'].forEach((item, i) => {
-          let id = voteID + item.member_id;
-          let vid = voteID;
-          let bid = data['bill']['bill_id'];
-          let mid = item.member_id;
-          let pos = item.vote_position;
+      if (err) {
+        console.log(`API timeout`);
+        console.log(err);
+      } else {
+        if (response.statusCode == 200) {
+          let data = JSON.parse(body)['results']['votes']['vote'];
+          data['positions'].forEach((item, i) => {
+            let id = voteID + item.member_id;
+            let vid = voteID;
+            let bid = data['bill']['bill_id'];
+            let mid = item.member_id;
+            let pos = item.vote_position;
 
-          let query = `INSERT IGNORE INTO membervote(id, voteID, billID, memberID, votePosition)
-                        VALUES('${id}', '${vid}', '${bid}', '${mid}', '${pos}');`;
-          manager.pool.getConnection((err, con) => {
-            con.query(query, (err, res) => {
-              con.release();
-              if (err) throw err;
+            let query = `INSERT IGNORE INTO membervote(id, voteID, billID, memberID, votePosition)
+                          VALUES('${id}', '${vid}', '${bid}', '${mid}', '${pos}');`;
+            manager.pool.getConnection((err, con) => {
+              con.query(query, (err, res) => {
+                con.release();
+                if (err) throw err;
+              });
             });
           });
-        });
+        }
       }
     });
   }
