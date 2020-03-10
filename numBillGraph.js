@@ -4,10 +4,10 @@ let con = mysql.createConnection(connectionConfig);
 
 con.connect(function(err){
     if(err){
-        console.log('Error connecting to database for grapher');
+        console.log('Error connecting to database for grapher numBill');
     }
     else{
-        console.log("Datababse successffully connect for grapher");
+        console.log("Datababse successffully connect for grapher numBill");
     }
 });
 
