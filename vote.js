@@ -28,7 +28,7 @@ function vote(conn, next) {
                   FROM memberVote
                     INNER JOIN member ON member.id = memberVote.memberID
                     INNER JOIN bill ON bill.id = memberVote.billID 
-                  GROUP BY billID`;
+                  GROUP BY bill.id, bill.bill`;
 
 	conn.query(query, function(err, rows) {
 		if (err) {
