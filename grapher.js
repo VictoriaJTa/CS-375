@@ -67,7 +67,7 @@ class PieChart{
 				.text(function (d) { return d.data[1][self.key] + ": " + d.data[1][self.value]; });
 	}
 }
-module.exports = PieChart
+exports.PieChart = PieChart
 
 class BarChart{
 
@@ -216,4 +216,4 @@ class BarChart{
 				}
 	}
 }
-module.exports = BarChart
+exports.BarChart = BarChart

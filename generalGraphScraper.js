@@ -2,6 +2,8 @@ let mysql = require('mysql');
 let connectionConfig = require('./config.json');
 let con = mysql.createConnection(connectionConfig);
 
+const {PieChart, BarChart} = require('./grapher.js')
+
 con.connect(function(err){
     if(err){
         console.log('Error connecting to database for general Graph Info');
@@ -73,7 +75,7 @@ con.query('SELECT member.party FROM member',
               });
             }
             //console.log("Sponsors by Party :",sponsorArr);
-           // var SBPPieChart = new PieChart("body", sponsorArr, "party", "amount", 500, 500)
+            //var SBPPieChart = new PieChart("body", sponsorArr, "party", "amount", 500, 500)
 
         }
     }
