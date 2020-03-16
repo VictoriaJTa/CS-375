@@ -29,17 +29,6 @@ function getStatus(status) {
 		statuses.push({ table: 'bill', column: 'enacted', type: 3 });
 	}
 
-	if (status.includes('updated')) {	
-		statuses.push({
-			type: 4,
-			is_or: false,
-			value: [
-				{ table: 'bill', column: 'lastVote', value: ['2019-01-02'], type: 1 },
-				{ table: 'member', column: 'congress', value: [116], type: 2 }
-			]
-		});
-	}
-
 	if (status.includes('vetoed')) {
 		statuses.push({ table: 'bill', column: 'vetoed', type: 3 });	
 	}	
