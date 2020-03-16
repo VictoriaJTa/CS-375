@@ -94,11 +94,10 @@ function vote(conn, next) {
 }
 
 function subject(conn, next) {
-    const query =  `SELECT bill.id, bill.bill, 
-                        IF(bill.primarySubject IS NULL OR bill.primarySubject = '', '[NO SUBJECT]', bill.primarySubject) AS primarySubject, COUNT(bill.primarySubject) AS billCount 
-                    FROM bill
+    const query =  `SELECT IF(bill.primarySubject IS NULL OR bill.primarySubject = '', '[NO SUBJECT]', bill.primarySubject) AS primarySubject, COUNT(bill.primarySubject) AS billCount 
+                        FROM bill
                     WHERE bill.lastVote > NOW() - INTERVAL ${DEFAULT_INTERVAL} 
-                    GROUP BY bill.primarySubject;`;
+                    GROUP BY primarySubject;`;
 
 	conn.query(query, function(err, rows) {
 		if (err) {

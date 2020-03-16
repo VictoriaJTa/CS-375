@@ -27,6 +27,7 @@ app.get('/bill', function(req, res) {
 		billmod.bill(conn, req.query, function (value, rows) {
 			if (value < 0) {
 				console.log('Error while trying to retrieve billss.');
+				res.statusCode = 500;
 				res.send('Error: Issue while trying to retrieve bills.');
 			} else {
 				let data = {
@@ -67,6 +68,8 @@ app.get('/bill', function(req, res) {
 						congress_gov_uri: congress_gov_uri				
 					});
 				}				
+
+				res.statusCode = 200;
 				res.send(data);
 			}
 		}, filters);
@@ -81,6 +84,7 @@ app.get('/vote', function(req, res) {
 		votemod.vote(conn, function(value, rows) {
 			if (value < 0) {
 				console.log('Error while trying to retrieve vote distribution.');
+				res.statusCode = 500;
 				res.send('Error: Issue while trying to retrieve vote distribution.');
 			} else {
 				let data = {
@@ -105,6 +109,7 @@ app.get('/vote', function(req, res) {
 					});
 				}
 
+				res.statusCode = 200;
 				res.send(data);
 			}
 		});
@@ -127,7 +132,8 @@ app.get('/stats', function(req, res) {
 		statmod.chamber(conn, function(value, rows) {
 			// Chamber distribution
 			if (value < 0) {
-				console.log('Error while trying to retrieve chamber diistribution.');
+				console.log('Error while trying to retrieve chamber distribution.');
+				res.statusCode = 500;
 				res.send('Error: Issue while trying to retrieve chamber distribution.');
 			} else {
 				for (let i=0; i<rows.length; i++) {
@@ -139,7 +145,8 @@ app.get('/stats', function(req, res) {
 				statmod.party(conn, function(value, rows) {
 					// Party distributions
 					if (value < 0) {
-						console.log('Error while trying to retrieve chamber diistribution.');
+						console.log('Error while trying to retrieve chamber distribution.');
+						res.statusCode = 500;
 						res.send('Error: Issue while trying to retrieve chamber distribution.');
 					} else {
 						for (let i=0; i<rows.length; i++) {
@@ -152,6 +159,7 @@ app.get('/stats', function(req, res) {
 							// Vote results
 							if (value < 0) {
 								console.log('Error while trying to retrieve vote results.');
+								res.statusCode = 500;
 								res.send('Error: Issue while trying to retrieve vote results.');
 							} else {
 								for (let i=0; i<rows.length; i++) {
@@ -164,6 +172,7 @@ app.get('/stats', function(req, res) {
 									// Vote distributions
 									if (value <0) {
 										console.log('Error while trying to retrieve vote diistribution.');
+										res.statusCode = 500;
 										res.send('Error: Issue while trying to retrieve vote distribution.');
 									} else {
 										for (let i=0; i<rows.length; i++) {
@@ -180,17 +189,19 @@ app.get('/stats', function(req, res) {
 										statmod.subject(conn, function(value, rows) {
 											// Subject distributions
 											if (value <0) {
-												console.log('Error while trying to retrieve vote diistribution.');
-												res.send('Error: Issue while trying to retrieve vote distribution.');
+												console.log('Error while trying to retrieve subject distribution.');
+												res.statusCode = 500;
+												res.send('Error: Issue while trying to retrieve subject distribution.');
 											} else {
 												for (let i=0; i<rows.length; i++) {
 													let row = rows[i];
 								
-													data.subject.push({ bill_id: row.id, bill: row.bill, subject: row.primarySubject,  count: row.billCount });
+													data.subject.push({ subject: row.primarySubject,  count: row.billCount });
 												}
 								
 												statmod.release(conn);
 
+												res.statusCode = 200;
 												res.send(data);
 											}
 										});	
