@@ -7,7 +7,7 @@ export default class BillList extends React.Component {
     super(props);
 
     this.state = {
-      bills: [1, 2, 3]
+      bills: []
     }
 
     fetch('http://localhost:8080/bill')
@@ -25,7 +25,7 @@ export default class BillList extends React.Component {
     return (
       <ul>
       {this.state.bills.map((value, index) => {
-        return <li key={index}><Bill /></li>
+        return <li key={index}><Bill data={value}/></li>
       })}
       </ul>
     );
