@@ -8,11 +8,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import BillList from '../../components/BillList'
 
 export default function HomePage() {
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <div>
+      <h1>
+        <FormattedMessage {...messages.header} />
+      </h1>
+      <BillList />
+    </div>
   );
 }
