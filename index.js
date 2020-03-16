@@ -2,6 +2,7 @@ const express = require('express');
 const dbmanager = require('./dbmanager');
 
 const billmod = require('./bill');
+const votemod = require('./vote');
 
 const CONFIG = require('./config.json');
 let db = new dbmanager.DBManager(CONFIG);
@@ -69,7 +70,41 @@ app.get('/bill', function(req, res) {
 			}
 		}, filters);
 	});
-})
+});
+
+app.get('/vote', function(req, res) {
+	db.pool.getConnection(function(err, conn) {
+		votemod.vote(conn, function(value, rows) {
+			if (value < 0) {
+				console.log('Error while trying to retrieve vote distribution.');
+				res.send('Error: Isue while trying to retrieve vote distribution.');
+			} else {
+				let data = {
+					votes: []
+				};
+
+				for (let i=0; i<rows.length; i++) {
+					let row = rows[i];
+
+					data.votes.push({
+						bill: row.bill,
+						roll_call: row.rollCallID,
+						vote_yes: row.voteYes,
+						vote_no: row.voteNo,
+						vote_r_yes: row.voteRepYes,
+						vote_r_no: row.voteRepNo,
+						vote_d_yes: row.voteDemYes,
+						vote_d_no: row.voteDemNo,
+						vote_i_yes: row.voteIndYes,
+						vote_i_no: row.voteIndNo
+					});
+				}
+
+				res.send(data);
+			}
+		});
+	});
+});
 
 port = 8080;
 app.listen(port, function() {
