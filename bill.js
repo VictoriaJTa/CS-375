@@ -29,17 +29,6 @@ function getStatus(status) {
 		statuses.push({ table: 'bill', column: 'enacted', type: 3 });
 	}
 
-	if (status.includes('updated')) {	
-		statuses.push({
-			type: 4,
-			is_or: false,
-			value: [
-				{ table: 'bill', column: 'lastVote', value: ['2019-01-02'], type: 1 },
-				{ table: 'member', column: 'congress', value: [116], type: 2 }
-			]
-		});
-	}
-
 	if (status.includes('vetoed')) {
 		statuses.push({ table: 'bill', column: 'vetoed', type: 3 });	
 	}	
@@ -91,20 +80,20 @@ function processFilters(conn, filters, is_or = false) {
 }
 
 // Constructs clause using passing in id and filters
-function getClause(conn, filters) {
-	if (filters === null) {
+function getClause(conn, req) {
+	if (req === null || (req.page && Object.keys(req).length < 2)) {
 		return '';
 	}
 
 	let formatted = [];
-	for (let filter of Object.keys(filters)) {	
+	for (let filter of Object.keys(req)) {	
 		// Tables to search for based on the filter
 		const billcol = ['id', 'lastVote', 'dateMin', 'dateMax'];
 		const membercol = ['chamber', 'party'];
 		const sharedcol = ['status'];
 
 		let column = filter;
-		let value = filters[filter];
+		let value = req[filter];
 		value = value.split(',');
 
 		let table = '';
@@ -136,24 +125,28 @@ function getClause(conn, filters) {
 }
 
 // Executes the quert and returns the rows so that the client application can use it accordingly
-function bill(conn, filters, next) {
-	let clause = getClause(conn, filters);
+function bill(conn, req, next) {
+	let clause = getClause(conn, req);
 
 	let where = '';
 	if (clause !== null && clause !== '') {
 		where += `WHERE ${clause}`;
 	}
 
+	let page = req.page;
+	if (!page) {
+		page = 0;
+	}
+
 	const query =  `SELECT bill.id, bill.bill, bill.shortTitle, bill.summary, bill.type, bill.congress, bill.senatePassage, bill.housePassage, bill.active, bill.vetoed, bill.enacted, bill.lastVote, bill.introduced, 
-						member.firstName, member.lastName, member.party, member.state, member.chamber
-					FROM bill
-						INNER JOIN member ON member.id = bill.sponsorID
-					${where}
-					ORDER BY bill.lastVote DESC
-					LIMIT 20`;
+											member.firstName, member.lastName, member.party, member.state, member.chamber
+									FROM bill
+											INNER JOIN member ON member.id = bill.sponsorID
+									${where}
+									ORDER BY bill.lastVote DESC
+									LIMIT ${page * 20},20`;
 
 	conn.query(query, function(err, rows) {
-		conn.release(); // release the connection to the pool
 		if (err) {
 			console.log(err);
 			next (-1, rows);
@@ -165,3 +158,8 @@ function bill(conn, filters, next) {
 }
 
 exports.bill = bill;
+
+function release(conn) {
+	conn.release(); // release the connection to the pool
+}
+exports.release = release;
