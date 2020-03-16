@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const dbmanager = require('./dbmanager');
 
 const billmod = require('./bill');
@@ -10,6 +11,7 @@ let db = new dbmanager.DBManager(CONFIG);
 
 // Set up basic app
 app = express();
+app.use(cors());
 app.get('/', function(req, res) {
   res.send('Success!');
 });
@@ -45,7 +47,7 @@ app.get('/bill', function(req, res) {
 						default: 			type = 'senate-bill'; break;
 					}
 					let code = row.bill.substring(row.bill.lastIndexOf('.') + 1);	// All bill names formatted as x.x.<code>
-					let congress_gov_uri = `https://www.congress.gov/bill/${congress}th-congress/${type}/${code}`;					
+					let congress_gov_uri = `https://www.congress.gov/bill/${congress}th-congress/${type}/${code}`;
 
 					// Pushes data to the array; can opt to remove fields if desired
 					data.bills.push({
@@ -64,10 +66,10 @@ app.get('/bill', function(req, res) {
 						sponosor_last_name: row.lastName,
 						sponsor_party: row.party,
 						sponsor_state: row.state,
-						chamber: row.chamber,				
-						congress_gov_uri: congress_gov_uri				
+						chamber: row.chamber,
+						congress_gov_uri: congress_gov_uri
 					});
-				}				
+				}
 
 				res.statusCode = 200;
 				res.send(data);
@@ -95,7 +97,7 @@ app.get('/vote', function(req, res) {
 					let row = rows[i];
 
 					data.votes.push({
-						id: row.id, 
+						id: row.id,
 						bill: row.bill,
 						roll_call: row.rollCallID,
 						vote_yes: row.voteYes,
@@ -115,7 +117,7 @@ app.get('/vote', function(req, res) {
 		});
 
 		votemod.release(conn);
-	});	
+	});
 });
 
 // Stat stats endpoint
@@ -151,10 +153,10 @@ app.get('/stats', function(req, res) {
 					} else {
 						for (let i=0; i<rows.length; i++) {
 							let row = rows[i];
-		
+
 							data.party.push({ party: row.party, count: row.partyCount });
 						}
-		
+
 						statmod.voteResult(conn, function(value, rows) {
 							// Vote results
 							if (value < 0) {
@@ -164,10 +166,10 @@ app.get('/stats', function(req, res) {
 							} else {
 								for (let i=0; i<rows.length; i++) {
 									let row = rows[i];
-				
+
 									data.vote_result.push({ vote_result: row.result, count: row.resultCount });
 								}
-				
+
 								statmod.vote(conn, function(value, rows) {
 									// Vote distributions
 									if (value <0) {
@@ -177,15 +179,15 @@ app.get('/stats', function(req, res) {
 									} else {
 										for (let i=0; i<rows.length; i++) {
 											let row = rows[i];
-						
-											data.vote_distribution.push({ bill_id: row.id, bill: row.bill, roll_call: row.rollCallID, 
+
+											data.vote_distribution.push({ bill_id: row.id, bill: row.bill, roll_call: row.rollCallID,
 												vote_yes: row.voteYes, vote_no: row.voteNo,
 												vote_rep_yes: row.voteRepYes, vote_rep_no: row.voteRepNo,
 												vote_dem_yes: row.voteDemYes, vote_dem_no: row.voteDemNo,
 												vote_ind_yes: row.voteIndYes, vote_ind_no: row.voteIndNo
 											});
 										}
-						
+
 										statmod.subject(conn, function(value, rows) {
 											// Subject distributions
 											if (value <0) {
@@ -195,24 +197,24 @@ app.get('/stats', function(req, res) {
 											} else {
 												for (let i=0; i<rows.length; i++) {
 													let row = rows[i];
-								
+
 													data.subject.push({ subject: row.primarySubject,  count: row.billCount });
 												}
-								
+
 												statmod.release(conn);
 
 												res.statusCode = 200;
 												res.send(data);
 											}
-										});	
+										});
 									}
-								});	
+								});
 							}
 						});
 					}
-				});	
+				});
 			}
-		});		
+		});
 	});
 });
 
