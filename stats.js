@@ -39,7 +39,7 @@ function voteResult(conn, next) {
                   FROM vote 
                         INNER JOIN bill ON bill.id = vote.billID 
                   WHERE bill.lastVote > NOW() - INTERVAL ${DEFAULT_INTERVAL} 
-                  GROUP BY vote.result;`;
+                  GROUP BY vote.result`;
 
 	conn.query(query, function(err, rows) {
 		if (err) {
@@ -81,7 +81,7 @@ function vote(conn, next) {
                     INNER JOIN member ON member.id = memberVote.memberID
                     INNER JOIN bill ON bill.id = memberVote.billID 
                     WHERE bill.lastVote > NOW() - INTERVAL ${DEFAULT_INTERVAL} 
-                    GROUP BY billID`;
+                    GROUP BY bill.id, bill.bill`;
 
 	conn.query(query, function(err, rows) {
 		if (err) {
