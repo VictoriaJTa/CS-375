@@ -3,6 +3,7 @@ const dbmanager = require('./dbmanager');
 
 const billmod = require('./bill');
 const votemod = require('./vote');
+const statmod = require('./stats');
 
 const CONFIG = require('./config.json');
 let db = new dbmanager.DBManager(CONFIG);
@@ -69,15 +70,18 @@ app.get('/bill', function(req, res) {
 				res.send(data);
 			}
 		}, filters);
+
+		billmod.release(conn);
 	});
 });
 
+// Vote data endpoint
 app.get('/vote', function(req, res) {
 	db.pool.getConnection(function(err, conn) {
 		votemod.vote(conn, function(value, rows) {
 			if (value < 0) {
 				console.log('Error while trying to retrieve vote distribution.');
-				res.send('Error: Isue while trying to retrieve vote distribution.');
+				res.send('Error: Issue while trying to retrieve vote distribution.');
 			} else {
 				let data = {
 					votes: []
@@ -87,6 +91,7 @@ app.get('/vote', function(req, res) {
 					let row = rows[i];
 
 					data.votes.push({
+						id: row.id, 
 						bill: row.bill,
 						roll_call: row.rollCallID,
 						vote_yes: row.voteYes,
@@ -103,6 +108,100 @@ app.get('/vote', function(req, res) {
 				res.send(data);
 			}
 		});
+
+		votemod.release(conn);
+	});	
+});
+
+// Stat stats endpoint
+app.get('/stats', function(req, res) {
+	db.pool.getConnection(function(err, conn) {
+		let data = {
+			chamber: [],
+			party: [],
+			vote_result: [],
+			vote_distribution: [],
+			subject: []
+		}
+
+		statmod.chamber(conn, function(value, rows) {
+			// Chamber distribution
+			if (value < 0) {
+				console.log('Error while trying to retrieve chamber diistribution.');
+				res.send('Error: Issue while trying to retrieve chamber distribution.');
+			} else {
+				for (let i=0; i<rows.length; i++) {
+					let row = rows[i];
+
+					data.chamber.push({ chamber: row.chamber, count: row.chamberCount });
+				}
+
+				statmod.party(conn, function(value, rows) {
+					// Party distributions
+					if (value < 0) {
+						console.log('Error while trying to retrieve chamber diistribution.');
+						res.send('Error: Issue while trying to retrieve chamber distribution.');
+					} else {
+						for (let i=0; i<rows.length; i++) {
+							let row = rows[i];
+		
+							data.party.push({ party: row.party, count: row.partyCount });
+						}
+		
+						statmod.voteResult(conn, function(value, rows) {
+							// Vote results
+							if (value < 0) {
+								console.log('Error while trying to retrieve vote results.');
+								res.send('Error: Issue while trying to retrieve vote results.');
+							} else {
+								for (let i=0; i<rows.length; i++) {
+									let row = rows[i];
+				
+									data.vote_result.push({ vote_result: row.result, count: row.resultCount });
+								}
+				
+								statmod.vote(conn, function(value, rows) {
+									// Vote distributions
+									if (value <0) {
+										console.log('Error while trying to retrieve vote diistribution.');
+										res.send('Error: Issue while trying to retrieve vote distribution.');
+									} else {
+										for (let i=0; i<rows.length; i++) {
+											let row = rows[i];
+						
+											data.vote_distribution.push({ bill_id: row.id, bill: row.bill, roll_call: row.rollCallID, 
+												vote_yes: row.voteYes, vote_no: row.voteNo,
+												vote_rep_yes: row.voteRepYes, vote_rep_no: row.voteRepNo,
+												vote_dem_yes: row.voteDemYes, vote_dem_no: row.voteDemNo,
+												vote_ind_yes: row.voteIndYes, vote_ind_no: row.voteIndNo
+											});
+										}
+						
+										statmod.subject(conn, function(value, rows) {
+											// Subject distributions
+											if (value <0) {
+												console.log('Error while trying to retrieve vote diistribution.');
+												res.send('Error: Issue while trying to retrieve vote distribution.');
+											} else {
+												for (let i=0; i<rows.length; i++) {
+													let row = rows[i];
+								
+													data.subject.push({ bill_id: row.id, bill: row.bill, subject: row.primarySubject,  count: row.billCount });
+												}
+								
+												statmod.release(conn);
+
+												res.send(data);
+											}
+										});	
+									}
+								});	
+							}
+						});
+					}
+				});	
+			}
+		});		
 	});
 });
 

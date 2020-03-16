@@ -1,6 +1,6 @@
 // Retrieves the number of yes and no votes for a set of bills
 function vote(conn, next) {
-	const query =  `SELECT bill.bill, MAX(voteID) AS rollCallID,
+	const query =  `SELECT bill.id, bill.bill, MAX(voteID) AS rollCallID,
                     SUM(CASE WHEN votePosition = 'yes' 
                         THEN 1 ELSE 0 
                         END) AS voteYes,
@@ -31,7 +31,6 @@ function vote(conn, next) {
                   GROUP BY billID`;
 
 	conn.query(query, function(err, rows) {
-		conn.release(); // release the connection to the pool
 		if (err) {
 			console.log(err);
 			next (-1, rows);
@@ -43,3 +42,8 @@ function vote(conn, next) {
 }
 
 exports.vote = vote;
+
+function release(conn) {
+    conn.release(); // release the connection to the pool
+}
+exports.release = release;
