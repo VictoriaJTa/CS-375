@@ -13,9 +13,6 @@ import BillList from '../../components/BillList'
 export default function HomePage() {
   return (
     <div>
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
       <BillList />
     </div>
   );
