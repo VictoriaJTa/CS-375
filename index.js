@@ -3,6 +3,8 @@ const dbmanager = require('./dbmanager');
 
 const billmod = require('./bill');
 
+const testing = require('./generalGraphScraper');
+
 const CONFIG = require('./config.json');
 let db = new dbmanager.DBManager(CONFIG);
 
@@ -74,4 +76,5 @@ app.get('/bill', function(req, res) {
 port = 8080;
 app.listen(port, function() {
   console.log(`Server listening on port ${port}`);
+  console.log(testing)
 });
