@@ -5,7 +5,7 @@ import request from 'utils/request';
 import {billLoaded, billError} from './action';
 
 export function* getBill() {
-    const requestURL = 'http://localhost:8000/bill';
+    const requestURL = 'http://localhost:8080/bill';
     try {
         const bills = yield call(request, requestURL);
         console.log("saga called");

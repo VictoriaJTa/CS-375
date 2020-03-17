@@ -26,7 +26,7 @@ import { loadBill } from '../App/action';
 
 const key = 'home';
 
-export function HomePage({loading, error, bills, onLoad}) {
+export function HomePage({loading, error, bills, onLoadHandler}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
@@ -38,12 +38,14 @@ export function HomePage({loading, error, bills, onLoad}) {
 
   return (
     <div>
-      <NavBar onload={onLoad}/>
+      <NavBar onLoad={() => {console.log(bills)}} />
       <Fragment>
-        <FilterList />
+
         <div className="container-fluid">  
-          <BillList />
+          <BillList {...billListProps}/>
         </div>
+        <button onClick={onLoadHandler}>Click 1</button>
+        <button onClick={() => {console.log(bills)}}>Click 2</button>
       </Fragment>
     </div>
   );
@@ -54,7 +56,7 @@ HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
   bills: PropTypes.any,
-  onLoad: PropTypes.func,
+  onLoadHandler: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -65,7 +67,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoad: evt => {dispatch(loadBill()); console.log("loading bills");},
+    onLoadHandler: evt => dispatch(loadBill()),
   };
 }
 
