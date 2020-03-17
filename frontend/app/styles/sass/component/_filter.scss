@@ -18,8 +18,8 @@
   .filter__menu {
     position: absolute;
     top: 0;
-    right: 0;
-    max-width: 275px;
+    right: -275px;
+    width: 275px;
     height: 100vh;
     background: #fff;
 
@@ -95,47 +95,71 @@
 
     .filter__group {
       list-style: none;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 1rem;      
+    }
+  }
+}
 
-      .filter {
-        display: inline-block;
-        color: $color-gray-medium;
-        margin-top: 0.35rem;
-        margin-bottom: 0.35rem;
-        margin-right: 0.5rem;
-        padding: 0.25rem 1.0rem;
-        border: 1px solid $color-gray-medium;
-        border-radius: 1.5rem;
-        cursor: pointer;
+.filter__applied {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 
-        &:hover {
-          background: $color-primary-transparent;
-          color: $color-primary;
-          border-color: $color-primary;
-        }
+  .filter {
+    margin-right: 1.0rem;    
+  }
+}
 
-        &.active {
-          background: $color-primary-transparent;
-          color: $color-primary;
-          padding-right: 0.5rem;
-          border-color: $color-primary;
+.filter {
+  display: inline-block;
+  color: $color-gray-medium;
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+  margin-right: 0.5rem;
+  padding: 0.25rem 1.0rem;
+  border: 1px solid $color-gray-medium;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 
-          i {
-            display: inline-block;
-          }
-        }
+  &:hover {
+    background: $color-primary-transparent;
+    color: $color-secondary;
+    border-color: $color-primary;
+  }
 
-        span,
-        i {
-          display: inline-block;
-          vertical-align: middle;
-        }        
+  &.active {
+    background: $color-primary-transparent;
+    color: $color-primary;
+    padding-right: 0.5rem;
+    border-color: $color-primary;
 
-        i {
-          display: none;
-          margin-left: 0.25rem;
-        }
+    &:hover {
+      background: $color-secondary-transparent;
+      border-color: $color-secondary;
+
+      span, span:hover,
+      i, i:hover {
+        color: $color-secondary;
       }
     }
+
+    i {
+      display: inline-block;
+    }
+  }
+
+  span,
+  i {
+    display: inline-block;
+    vertical-align: middle;
+
+    &:hover {
+      color: $color-primary-hover;
+    }
+  }        
+
+  i {
+    display: none;
+    margin-left: 0.25rem;
   }
 }
