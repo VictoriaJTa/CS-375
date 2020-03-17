@@ -1,0 +1,1 @@
+export const LOAD_BILL = 'billbar/App/LOAD_BILL';
