@@ -10,12 +10,14 @@ import React, { memo } from "react";
 import {Link} from 'react-router-dom';
 function NavBar() {
   return (
-    <Link to="bills">
+    <div>
+      <Link to="bills">
       Bill
     </Link>
     <Link to="stats">
       Stats
     </Link>
+    </div>
   );
 }
 
