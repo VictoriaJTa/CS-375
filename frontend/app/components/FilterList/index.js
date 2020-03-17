@@ -26,9 +26,18 @@ export default class FilterList extends React.Component {
 
   render () {
     return (
-      this.state.filters.map((value, index) => {       
-        return <FilterGroup key={index} name={value.name} filters={value.filters} />
-      })
+      <div className="filter__list">
+          <div className="filter__overlay"></div>
+          <div className="filter__menu">
+            <div className="filter__title">
+              <span>Filter</span>
+              <i className="material-icons">close</i>
+            </div>
+            {this.state.filters.map((value, index) => {       
+              return <FilterGroup key={index} name={value.name} filters={value.filters} />
+            })}
+          </div>
+        </div>
     );
   }
 }

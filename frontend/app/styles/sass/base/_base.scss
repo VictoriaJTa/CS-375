@@ -1,0 +1,13 @@
+html {
+  background: $color-light;  
+  font-size: 14px;
+}
+
+body, p, label {
+  font-family: $font-body;
+}
+
+.row {
+  max-width: $bp-md;
+  margin: 0 auto;
+}

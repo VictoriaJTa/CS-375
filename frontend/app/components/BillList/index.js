@@ -23,9 +23,9 @@ export default class BillList extends React.Component {
 
   render () {
     return (
-      <ul>
+      <ul className="row no-gutters bill-list">
       {this.state.bills.map((value, index) => {
-        return <li key={index}><Bill data={value}/></li>
+        return <li className="col-12" key={index}><Bill data={value} /></li>
       })}
       </ul>
     );
