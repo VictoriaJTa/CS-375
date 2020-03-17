@@ -8,3 +8,6 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+export const LOAD_BILL = 'billbar/App/LOAD_BILL';
+export const LOAD_BILL_SUCCESS = 'billbar/App/LOAD_BILL_SUCCESS';
+export const LOAD_BILL_ERROR = 'billbar/App/LOAD_BILL_ERROR';
