@@ -38,7 +38,7 @@ export function HomePage({loading, error, bills, onLoad}) {
 
   return (
     <div>
-      <NavBar/>
+      <NavBar onload={onLoad}/>
       <Fragment>
         <FilterList />
         <div className="container-fluid">  
