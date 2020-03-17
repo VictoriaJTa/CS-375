@@ -7,10 +7,10 @@
 import React, { memo } from "react";
 import PropTypes from 'prop-types';
 import Bill from "../Bill";
+import List from "../List";
 // import styled from 'styled-components';
 
 function BillList({loading, error, bills}) {
-  console.log(loading);
   if (loading) {
     return <p>Loading 99%...</p>;
   }

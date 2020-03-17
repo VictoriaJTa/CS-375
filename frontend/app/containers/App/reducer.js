@@ -10,7 +10,6 @@ const appReducer = (state = initialState, action) =>
     produce(state, draft => {
         switch (action.type) {
             case LOAD_BILL:
-                console.log(state.bills);
                 draft.loading = true;
                 draft.error = false;
                 break;

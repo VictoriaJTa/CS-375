@@ -24,7 +24,7 @@ import saga from '../App/saga';
 import { loadBill } from '../App/action';
 
 
-const key = 'home';
+const key = 'global';
 
 export function HomePage({loading, error, bills, onLoadHandler}) {
   useInjectReducer({key, reducer});
@@ -36,16 +36,16 @@ export function HomePage({loading, error, bills, onLoadHandler}) {
     bills
   }
 
+  if (bills == false) {
+    onLoadHandler();
+  }
+
   return (
     <div>
-      <NavBar onLoad={() => {console.log(bills)}} />
       <Fragment>
-
         <div className="container-fluid">  
           <BillList {...billListProps}/>
         </div>
-        <button onClick={onLoadHandler}>Click 1</button>
-        <button onClick={() => {console.log(bills)}}>Click 2</button>
       </Fragment>
     </div>
   );
@@ -67,7 +67,10 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoadHandler: evt => dispatch(loadBill()),
+    onLoadHandler: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(loadBill());
+    },
   };
 }
 

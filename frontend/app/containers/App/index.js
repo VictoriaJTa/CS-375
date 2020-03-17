@@ -15,10 +15,12 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 import '../../styles/styles.css';
+import NavBar from '../../components/NavBar';
 
 export default function App() {
   return (
     <div>
+      <NavBar />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route component={NotFoundPage} />

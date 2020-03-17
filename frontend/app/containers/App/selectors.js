@@ -2,8 +2,9 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 import { select } from 'redux-saga/effects';
 
-const selectRouter = state => state.router;
 const selectGlobal = state => state.global || initialState;
+const selectRouter = state => state.router;
+
 
 const makeSelectLocation = () =>
   createSelector(
@@ -14,19 +15,19 @@ const makeSelectLocation = () =>
 const makeSelectBills = () => 
 createSelector(
   selectGlobal,
-  global => global.bills,
+  globalState => globalState.bills,
 );
 
 const makeSelectBillLoading = () =>
   createSelector(
     selectGlobal,
-    global => global.loading,
+    globalState => globalState.loading,
   );
 
 const makeSelectBillError = () => 
 createSelector(
   selectGlobal,
-  global => global.error,
+  globalState => globalState.error,
 )
 
 export { makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError };
