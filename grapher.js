@@ -1,3 +1,5 @@
+var d3 = require("d3");
+
 class PieChart{
 
 	constructor(locationName, dataIn, key, value, width, height){
