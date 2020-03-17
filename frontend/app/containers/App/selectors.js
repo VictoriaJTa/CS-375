@@ -23,10 +23,10 @@ const makeSelectBillLoading = () =>
     global => global.loading,
   );
 
-const makeSelectBillErorr = () => 
+const makeSelectBillError = () => 
 createSelector(
   selectGlobal,
   global => global.error,
 )
 
-export { makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillErorr };
+export { makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError };

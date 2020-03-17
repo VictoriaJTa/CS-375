@@ -6,7 +6,7 @@ export const initialState = {
     bills:false,
 }
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action) =>
     produce(state, draft => {
         switch (action.type) {
             case LOAD_BILL:
@@ -26,6 +26,5 @@ const appReducer = (state = initialState, action) => {
                 break;
         }
     });
-}
 
 export default appReducer;

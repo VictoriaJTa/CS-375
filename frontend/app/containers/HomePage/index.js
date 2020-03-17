@@ -53,7 +53,7 @@ export function HomePage({loading, error, bills, onLoad}) {
 HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
-  bills: PropTypes.oneOf(PropTypes.bool, PropTypes.array),
+  bills: PropTypes.any,
   onLoad: PropTypes.func,
 }
 
@@ -65,7 +65,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoad: evt => dispatch(loadBill()),
+    onLoad: evt => {dispatch(loadBill()); console.log("loading bills");},
   };
 }
 
