@@ -1,0 +1,22 @@
+.tabs {
+  background: $color-primary;
+  margin-bottom: 1.0rem;
+
+  .tab {    
+    color: #fff;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    text-align: center;
+    font-size: 1.35rem;
+
+    &:hover {
+      background: $color-primary-hover;
+      text-decoration: none;
+    }
+
+    &.active {
+      background: $color-secondary;
+      font-weight: 700;
+    }
+  }
+}

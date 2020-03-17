@@ -11,3 +11,10 @@ body, p, label {
   max-width: $bp-md;
   margin: 0 auto;
 }
+
+i {
+  &:hover {
+    color: $color-gray-light;
+    cursor: pointer;
+  }
+}

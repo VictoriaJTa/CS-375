@@ -10,9 +10,9 @@ import React, { memo } from "react";
 import { Link } from "react-router-dom";
 function NavBar() {
   return (
-    <div>
-      <Link to="/">Bill</Link>
-      <Link to="stats">Stats</Link>
+    <div className="row tabs">
+      <Link to="/" className="col-6 tab active">Bill</Link>
+      <Link to="stats" className="col-6 tab">Stats</Link>
     </div>
   );
 }
