@@ -15,8 +15,10 @@ import FilterList from '../../components/FilterList';
 export default function HomePage() {
   return (
     <Fragment>
-      <FilterList />    
-      <BillList />
+      <FilterList />
+      <div className="container-fluid">  
+        <BillList />
+      </div>
     </Fragment>
   );
 }

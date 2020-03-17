@@ -1,0 +1,240 @@
+@import url(c:\CS375\CS-375\frontend\app\styles\sass\vendor\bootstrap.min.css);
+html {
+  background: #F5F5F5;
+  font-size: 14px;
+}
+
+body, p, label {
+  font-family: "Montserrat", sans-serif;
+}
+
+.row {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.bill-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.bill-list li {
+  background: #fff;
+  margin-bottom: 2.0rem;
+  border-top: 2px solid #C92843;
+  -webkit-box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.bill-list li .bill .bill__vote,
+.bill-list li .bill .bill__details {
+  padding: 0.75rem 1rem;
+}
+
+.bill-list li .bill .bill__header .bill__title {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.bill-list li .bill .bill__header .bill__title .title__code {
+  padding-left: 0;
+  padding-bottom: 0.5rem;
+  font-family: "Roboto Slab", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+@media only screen and (min-width: 768px) {
+  .bill-list li .bill .bill__header .bill__title .title__code {
+    padding-bottom: 0;
+    font-size: 1.35rem;
+  }
+}
+
+.bill-list li .bill .bill__header .bill__title .title {
+  padding: 0;
+  line-height: 1.25rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+@media only screen and (min-width: 768px) {
+  .bill-list li .bill .bill__header .bill__title .title {
+    line-height: 1.6rem;
+    font-size: 1.25rem;
+  }
+}
+
+.bill-list li .bill .bill__header .bill__summary {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.bill-list li .bill .bill__vote {
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.bill-list li .bill .bill__vote span:first-child {
+  margin-right: 1.0rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.bill-list li .bill .bill__link a {
+  display: block;
+  position: relative;
+  background: rgba(75, 104, 136, 0.04);
+  color: #494987;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.bill-list li .bill .bill__link a:hover {
+  background: rgba(75, 104, 136, 0.15);
+}
+
+.bill-list li .bill .bill__link a .link__text,
+.bill-list li .bill .bill__link a i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bill-list li .bill .bill__link a .link__text {
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.bill-list li .bill .bill__link a i {
+  position: absolute;
+  right: 1.0rem;
+}
+
+.bill-list li .bill .bill__details .detail {
+  margin-bottom: 0.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .bill-list li .bill .bill__details .detail {
+    margin-bottom: 0;
+  }
+}
+
+.bill-list li .bill .bill__details .detail .detail__label {
+  display: block;
+  margin-right: 1.0rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@media only screen and (min-width: 768px) {
+  .bill-list li .bill .bill__details .detail .detail__label {
+    display: inline-block;
+  }
+}
+
+.bill-list li .bill .bill__details .detail .detail__value {
+  margin-bottom: 0.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .bill-list li .bill .bill__details .detail .detail__value {
+    margin-bottom: 0;
+  }
+}
+
+.bill-list li .bill__expand {
+  background: #494987;
+  color: #fff;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.bill-list li .bill__expand:hover {
+  background: #6060AC;
+}
+
+.bill-list li .bill__expand i, .bill-list li .bill__expand span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bill-list li .bill__expand span {
+  font-weight: 700;
+}
+
+.filter__list {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5000;
+}
+
+.filter__list .filter__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.filter__list .filter__menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: 250px;
+  height: 100vh;
+  background: #fff;
+}
+
+.filter__list .filter__menu .filter__title {
+  padding: 0.5rem 1.0rem;
+}
+
+.filter__list .filter__menu .filter__title span,
+.filter__list .filter__menu .filter__title i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.filter__list .filter__menu .filter__title span {
+  font-family: "Roboto Slab", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.filter__list .filter__menu .filter__title i {
+  position: absolute;
+  top: 1.0rem;
+  right: 1.0rem;
+}
+
+.filter__list .filter__menu .filter__type {
+  background: rgba(75, 104, 136, 0.04);
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.filter__list .filter__menu .filter__group {
+  list-style: none;
+  padding: 0.5rem 1rem;
+}
+
+.filter__list .filter__menu .filter__group .filter {
+  display: inline-block;
+  padding: 0.25rem 1.0rem;
+  border: 1px solid #494987;
+  border-radius: 1rem;
+}
+/*# sourceMappingURL=styles.css.map */

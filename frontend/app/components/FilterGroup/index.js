@@ -11,9 +11,9 @@ export default class FilterList extends React.Component {
   render () {
     return (
       <Fragment>
-        <div>{this.props.name}</div>
+        <div className="filter__type">{this.props.name}</div>
 
-        <ul className="filter__list">
+        <ul className="filter__group">
           {this.props.filters.map((filter, index) => {
             return <Filter key={index} filter={filter} />
           })}
