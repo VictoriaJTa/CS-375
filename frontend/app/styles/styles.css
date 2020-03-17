@@ -1,4 +1,4 @@
-@import url(.\sass\vendor\bootstrap.min.css);
+@import url(c:\CS375\CS-375\frontend\app\styles\sass\vendor\bootstrap.min.css);
 html {
   background: #F5F5F5;
   font-size: 14px;
@@ -13,12 +13,41 @@ body, p, label {
   margin: 0 auto;
 }
 
-.bill-list {
-  list-style: none;
-  padding-left: 0;
+i:hover {
+  color: #E5E5E5;
+  cursor: pointer;
 }
 
-.bill-list li {
+header {
+  background: #494987;
+}
+
+header .header__title {
+  position: relative;
+  color: #fff;
+  padding-top: 0.65rem;
+  padding-bottom: 0.45rem;
+  text-align: center;
+}
+
+header .header__title h1,
+header .header__title i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+header .header__title h1 {
+  font-family: "Roboto Slab", serif;
+  font-size: 2.0rem;
+}
+
+header .header__title .header__filter {
+  position: absolute;
+  top: 0.35rem;
+  right: 0;
+}
+
+.bill {
   background: #fff;
   margin-bottom: 2.0rem;
   border-top: 2px solid #C92843;
@@ -28,18 +57,18 @@ body, p, label {
   box-sizing: border-box;
 }
 
-.bill-list li .bill .bill__vote,
-.bill-list li .bill .bill__details {
+.bill .bill__vote,
+.bill .bill__details {
   padding: 0.75rem 1rem;
 }
 
-.bill-list li .bill .bill__header .bill__title {
+.bill .bill__header .bill__title {
   margin: 0;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #E5E5E5;
 }
 
-.bill-list li .bill .bill__header .bill__title .title__code {
+.bill .bill__header .bill__title .title__code {
   padding-left: 0;
   padding-bottom: 0.5rem;
   font-family: "Roboto Slab", serif;
@@ -48,13 +77,13 @@ body, p, label {
 }
 
 @media only screen and (min-width: 768px) {
-  .bill-list li .bill .bill__header .bill__title .title__code {
+  .bill .bill__header .bill__title .title__code {
     padding-bottom: 0;
     font-size: 1.35rem;
   }
 }
 
-.bill-list li .bill .bill__header .bill__title .title {
+.bill .bill__header .bill__title .title {
   padding: 0;
   line-height: 1.25rem;
   font-family: "Montserrat", sans-serif;
@@ -63,29 +92,29 @@ body, p, label {
 }
 
 @media only screen and (min-width: 768px) {
-  .bill-list li .bill .bill__header .bill__title .title {
+  .bill .bill__header .bill__title .title {
     line-height: 1.6rem;
     font-size: 1.25rem;
   }
 }
 
-.bill-list li .bill .bill__header .bill__summary {
+.bill .bill__header .bill__summary {
   margin: 0;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #E5E5E5;
 }
 
-.bill-list li .bill .bill__vote {
+.bill .bill__vote {
   border-bottom: 1px solid #E5E5E5;
 }
 
-.bill-list li .bill .bill__vote span:first-child {
+.bill .bill__vote span:first-child {
   margin-right: 1.0rem;
   text-transform: uppercase;
   font-weight: 700;
 }
 
-.bill-list li .bill .bill__link a {
+.bill .bill__link a {
   display: block;
   position: relative;
   background: rgba(75, 104, 136, 0.04);
@@ -94,37 +123,42 @@ body, p, label {
   border-bottom: 1px solid #E5E5E5;
 }
 
-.bill-list li .bill .bill__link a:hover {
+.bill .bill__link a:hover {
   background: rgba(75, 104, 136, 0.15);
 }
 
-.bill-list li .bill .bill__link a .link__text,
-.bill-list li .bill .bill__link a i {
+.bill .bill__link a:hover .link__text, .bill .bill__link a:hover .link__text:hover,
+.bill .bill__link a:hover i, .bill .bill__link a:hover i:hover {
+  color: #6060AC;
+}
+
+.bill .bill__link a .link__text,
+.bill .bill__link a i {
   display: inline-block;
   vertical-align: middle;
 }
 
-.bill-list li .bill .bill__link a .link__text {
+.bill .bill__link a .link__text {
   text-decoration: underline;
   font-weight: 700;
 }
 
-.bill-list li .bill .bill__link a i {
+.bill .bill__link a i {
   position: absolute;
   right: 1.0rem;
 }
 
-.bill-list li .bill .bill__details .detail {
+.bill .bill__details .detail {
   margin-bottom: 0.5rem;
 }
 
 @media only screen and (min-width: 768px) {
-  .bill-list li .bill .bill__details .detail {
+  .bill .bill__details .detail {
     margin-bottom: 0;
   }
 }
 
-.bill-list li .bill .bill__details .detail .detail__label {
+.bill .bill__details .detail .detail__label {
   display: block;
   margin-right: 1.0rem;
   text-transform: uppercase;
@@ -132,22 +166,22 @@ body, p, label {
 }
 
 @media only screen and (min-width: 768px) {
-  .bill-list li .bill .bill__details .detail .detail__label {
+  .bill .bill__details .detail .detail__label {
     display: inline-block;
   }
 }
 
-.bill-list li .bill .bill__details .detail .detail__value {
+.bill .bill__details .detail .detail__value {
   margin-bottom: 0.5rem;
 }
 
 @media only screen and (min-width: 768px) {
-  .bill-list li .bill .bill__details .detail .detail__value {
+  .bill .bill__details .detail .detail__value {
     margin-bottom: 0;
   }
 }
 
-.bill-list li .bill__expand {
+.bill__expand {
   background: #494987;
   color: #fff;
   padding-top: 0.25rem;
@@ -156,16 +190,18 @@ body, p, label {
   cursor: pointer;
 }
 
-.bill-list li .bill__expand:hover {
+.bill__expand:hover {
   background: #6060AC;
+  color: #E5E5E5;
 }
 
-.bill-list li .bill__expand i, .bill-list li .bill__expand span {
+.bill__expand i, .bill__expand span {
   display: inline-block;
   vertical-align: middle;
 }
 
-.bill-list li .bill__expand span {
+.bill__expand span {
+  text-transform: uppercase;
   font-weight: 700;
 }
 
@@ -311,5 +347,28 @@ body, p, label {
 .filter__list .filter__menu .filter__group .filter i {
   display: none;
   margin-left: 0.25rem;
+}
+
+.tabs {
+  background: #494987;
+  margin-bottom: 1.0rem;
+}
+
+.tabs .tab {
+  color: #fff;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: center;
+  font-size: 1.35rem;
+}
+
+.tabs .tab:hover {
+  background: #6060AC;
+  text-decoration: none;
+}
+
+.tabs .tab.active {
+  background: #C92843;
+  font-weight: 700;
 }
 /*# sourceMappingURL=styles.css.map */

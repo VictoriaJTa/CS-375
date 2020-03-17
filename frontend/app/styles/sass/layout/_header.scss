@@ -1,0 +1,28 @@
+header {
+  background: $color-primary;
+
+  .header__title {
+    position: relative;
+    color: #fff;
+    padding-top: 0.65rem;
+    padding-bottom: 0.45rem;
+    text-align: center;
+
+    h1, 
+    i {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    h1 {
+      font-family: $font-header;
+      font-size: 2.0rem;
+    }
+
+    .header__filter {
+      position: absolute;
+      top: 0.35rem;
+      right: 0;
+    }
+  }
+}
