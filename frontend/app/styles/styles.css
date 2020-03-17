@@ -170,6 +170,7 @@ body, p, label {
 }
 
 .filter__list {
+  display: none;
   position: fixed;
   top: 0;
   width: 100%;
@@ -190,7 +191,7 @@ body, p, label {
   position: absolute;
   top: 0;
   right: 0;
-  max-width: 250px;
+  max-width: 275px;
   height: 100vh;
   background: #fff;
 }
@@ -215,6 +216,47 @@ body, p, label {
   position: absolute;
   top: 1.0rem;
   right: 1.0rem;
+  cursor: pointer;
+}
+
+.filter__list .filter__menu .filter__title i:hover {
+  color: #494987;
+}
+
+.filter__list .filter__menu .filter__date {
+  border-top: 1px solid #E5E5E5;
+}
+
+.filter__list .filter__menu .filter__date .date--start,
+.filter__list .filter__menu .filter__date .date--end {
+  position: relative;
+  padding: 0.75rem 0;
+}
+
+.filter__list .filter__menu .filter__date .date--start:hover,
+.filter__list .filter__menu .filter__date .date--end:hover {
+  background: rgba(75, 104, 136, 0.04);
+  color: #494987;
+  cursor: pointer;
+}
+
+.filter__list .filter__menu .filter__date .date--start > div:first-child,
+.filter__list .filter__menu .filter__date .date--end > div:first-child {
+  padding-left: 1.0rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.filter__list .filter__menu .filter__date .date--start > div:nth-child(2),
+.filter__list .filter__menu .filter__date .date--end > div:nth-child(2) {
+  padding-left: 0.25rem;
+  padding-right: 3.0rem;
+}
+
+.filter__list .filter__menu .filter__date .date--start i,
+.filter__list .filter__menu .filter__date .date--end i {
+  position: absolute;
+  right: 1rem;
 }
 
 .filter__list .filter__menu .filter__type {
@@ -233,8 +275,41 @@ body, p, label {
 
 .filter__list .filter__menu .filter__group .filter {
   display: inline-block;
+  color: #ABABAB;
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+  margin-right: 0.5rem;
   padding: 0.25rem 1.0rem;
-  border: 1px solid #494987;
-  border-radius: 1rem;
+  border: 1px solid #ABABAB;
+  border-radius: 1.5rem;
+  cursor: pointer;
+}
+
+.filter__list .filter__menu .filter__group .filter:hover {
+  background: rgba(75, 104, 136, 0.04);
+  color: #494987;
+  border-color: #494987;
+}
+
+.filter__list .filter__menu .filter__group .filter.active {
+  background: rgba(75, 104, 136, 0.04);
+  color: #494987;
+  padding-right: 0.5rem;
+  border-color: #494987;
+}
+
+.filter__list .filter__menu .filter__group .filter.active i {
+  display: inline-block;
+}
+
+.filter__list .filter__menu .filter__group .filter span,
+.filter__list .filter__menu .filter__group .filter i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.filter__list .filter__menu .filter__group .filter i {
+  display: none;
+  margin-left: 0.25rem;
 }
 /*# sourceMappingURL=styles.css.map */

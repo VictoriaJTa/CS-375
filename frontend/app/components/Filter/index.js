@@ -7,6 +7,11 @@ export default class FilterList extends React.Component {
   }
 
   render () {
-    return <li className="filter">{this.props.filter}</li>;
+    return (
+      <li className="filter">
+        <span>{this.props.filter}</span>
+        <i className="material-icons">close</i>
+      </li>
+    );
   }
 }

@@ -1,4 +1,5 @@
 .filter__list {
+  display: none;
   position: fixed;
   top: 0;
   width: 100%;
@@ -18,7 +19,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    max-width: 250px;
+    max-width: 275px;
     height: 100vh;
     background: #fff;
 
@@ -41,6 +42,45 @@
         position: absolute;
         top: 1.0rem;
         right: 1.0rem;
+        cursor: pointer;
+        
+        &:hover {
+          color: $color-primary;
+        }
+      }
+    }
+
+    .filter__date {      
+      border-top: 1px solid $color-gray-light;
+
+      .date--start,
+      .date--end {
+        position: relative;
+        padding: 0.75rem 0;
+
+        &:hover {
+          background: $color-primary-transparent;
+          color: $color-primary;
+          cursor: pointer;
+        }
+
+        > div {
+          &:first-child {
+            padding-left: 1.0rem;
+            text-transform: uppercase;
+            font-weight: 700;
+          }
+
+          &:nth-child(2) {
+            padding-left: 0.25rem;
+            padding-right: 3.0rem;
+          }
+        }
+
+        i {
+          position: absolute;
+          right: 1rem;
+        }
       }
     }
     
@@ -59,9 +99,42 @@
 
       .filter {
         display: inline-block;
+        color: $color-gray-medium;
+        margin-top: 0.35rem;
+        margin-bottom: 0.35rem;
+        margin-right: 0.5rem;
         padding: 0.25rem 1.0rem;
-        border: 1px solid $color-primary;
-        border-radius: 1rem;
+        border: 1px solid $color-gray-medium;
+        border-radius: 1.5rem;
+        cursor: pointer;
+
+        &:hover {
+          background: $color-primary-transparent;
+          color: $color-primary;
+          border-color: $color-primary;
+        }
+
+        &.active {
+          background: $color-primary-transparent;
+          color: $color-primary;
+          padding-right: 0.5rem;
+          border-color: $color-primary;
+
+          i {
+            display: inline-block;
+          }
+        }
+
+        span,
+        i {
+          display: inline-block;
+          vertical-align: middle;
+        }        
+
+        i {
+          display: none;
+          margin-left: 0.25rem;
+        }
       }
     }
   }
