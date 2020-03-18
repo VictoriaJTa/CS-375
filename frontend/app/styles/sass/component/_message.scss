@@ -1,6 +1,12 @@
 .message {
+  color: #ABABAB;
+  padding-top: 0.5rem;
   text-align: center;
-  font-style: italic;
-  font-size: 1.35rem;
-  font-weight: 700;  
+  text-transform: uppercase;
+  font-size: 1.0rem;
+  font-weight: 700;      
+}
+
+.message__disclaimer {
+  text-align: left;
 }
