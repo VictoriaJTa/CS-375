@@ -11,7 +11,6 @@ import FilterGroup from '../FilterGroup';
 
 
 function FilterList({visible}) {
-
   const stuff = {
     filters: [
       {
