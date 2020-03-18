@@ -114,21 +114,6 @@ export function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadBill());
     },
-    toggleItem: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      
-      const target = evt.target;
-      let expand = target.closest('.expand__content');
-      let content = expand.parentNode.previousSibling;
-
-      if (expand.classList.contains('active')) {
-        expand.classList.remove('active');
-        content.classList.remove('active');
-      } else {
-        expand.classList.add('active');
-        content.classList.add('active');
-      }
-    },
     toggleFilterHandler: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();
       dispatch(toggleFilter());

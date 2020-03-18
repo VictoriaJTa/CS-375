@@ -21,13 +21,13 @@ const Wrapper = styled.div`
   padding-bottom: 2rem;
 `;
 
-function BillList({loading, error, bills, toggleItem, onClickHandler, onClickHandlerLess}) {
+function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
   if (loading) {
     return <div className="loader"></div>;
   }
   if (bills !== false) {
     return <div>
-              <List items={bills} component={Bill} toggleItem={toggleItem} />
+              <List items={bills} component={Bill} />
               <Wrapper className="row no-gutters pagination">
                 <div className="col-6">
                   <Button onClick={onClickHandlerLess}>
@@ -62,7 +62,6 @@ BillList.propTypes = {
   bills: PropTypes.any,
   loading: PropTypes.bool,
   error: PropTypes.any,
-  toggleItem: PropTypes.func,
   onClickHandler: PropTypes.func,
   onClickHandlerLess: PropTypes.func,
 };
