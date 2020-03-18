@@ -12,11 +12,11 @@ import List from "../List";
 
 function BillList({loading, error, bills}) {
   if (loading) {
-    return <p>Loading 99%...</p>;
+    return <p className="message">Loading 99%...</p>;
   }
 
   if (error !== false) {
-    return <p>Something Went Wrong</p>;
+    return <p className="message">Something Went Wrong</p>;
   }
 
   if (bills !== false) {

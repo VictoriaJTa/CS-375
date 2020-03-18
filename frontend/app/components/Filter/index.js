@@ -8,7 +8,7 @@ export default class FilterList extends React.Component {
 
   render () {
     return (
-      <li className="filter active">
+      <li className="filter">
         <span>{this.props.filter}</span>
         <i className="material-icons">close</i>
       </li>
