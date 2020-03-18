@@ -4,7 +4,7 @@
  *
  */
 
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -31,6 +31,10 @@ export function Stats({stats, onLoadHandler, loading, error}) {
   if (stats == false) {
     onLoadHandler();
   }
+
+  useEffect(() => {
+    onLoadHandler();
+  }, []);
 
   const barGraphProps = {
     stats,
