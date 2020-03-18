@@ -15,6 +15,10 @@
       max-height: 180px;
       overflow: hidden;
 
+      &.active {
+        max-height: none;
+      }
+
       .bill__vote {
         padding: 0.75rem 1rem;
       }
@@ -176,6 +180,9 @@
             background: #fff;
           }
 
+          .expand__inactive {
+            display: none;
+          }
           .expand__active {
             display: block;
           }
@@ -191,6 +198,9 @@
           font-weight: 700;    
         }
 
+        .expand__inactive {
+          display: block;
+        }
         .expand__active {
           display: none;          
         }
