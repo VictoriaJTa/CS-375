@@ -63,14 +63,14 @@ const appReducer = (state = initialState, action) =>
                     
                     if (existingValue == actionValue) {
                         exist = true;
-                        draft.fil = draft.fil.splice(i,1);
+                        draft.fil.splice(i,1);
                     } else if (existingKey == actionKey) {
-                        draft.fil = draft.fil.splice(i,1);              
+                        draft.fil.splice(i,1);              
                     }
                 }
 
                 if (exist == false) {
-                    state.fil.push(action.fil);
+                    draft.fil.push(action.fil);
                 }
                 break;
         }
