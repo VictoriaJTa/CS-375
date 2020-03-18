@@ -4,10 +4,24 @@
  *
  */
 
-import { DEFAULT_ACTION } from "./constants";
+import { LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_ERROR } from "./constants";
 
-export function defaultAction() {
+export function loadStats() {
   return {
-    type: DEFAULT_ACTION
+    type: LOAD_STATS
+  };
+}
+
+export function statsLoaded(stats) {
+  return {
+    type: LOAD_STATS_SUCCESS,
+    stats
+  };
+}
+
+export function statsError(error) {
+  return {
+    type: LOAD_STATS_ERROR,
+    error
   };
 }

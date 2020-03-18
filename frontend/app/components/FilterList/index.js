@@ -27,7 +27,7 @@ export default class FilterList extends React.Component {
   render () {
     return (
       <div className="filter__list">
-          <div className="filter__overlay"></div>
+          {/* <div className="filter__overlay"></div> */}
           <div className="filter__menu">
             <div className="filter__title">
               <span>Filter</span>

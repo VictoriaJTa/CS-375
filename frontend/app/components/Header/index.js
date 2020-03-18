@@ -14,15 +14,11 @@ function Header() {
     <header className="container-fluid">
       <div className="row header__title">
         <div className="col-12">
-        <h1>Bill Bar</h1>
-        <i className="material-icons header__filter">tune</i>
+        <h1>Bill Bar</h1>        
         </div>
-      </div>
-
-      <NavBar />
+      </div>      
     </header>    
   );
 }
-
 
 export default Header;

@@ -32,11 +32,19 @@ function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
   }
 
   if (loading) {
-    return <p>Loading 99%...</p>;
+    return <div className="loader"></div>;
   }
 
   if (error !== false) {
+<<<<<<< HEAD
     return <p>Something Went Wrong</p>;
+=======
+    return <p className="message">Something Went Wrong</p>;
+  }
+
+  if (bills !== false) {
+    return <List items={bills} component={Bill}/>;
+>>>>>>> dc38d3ba5c7b76448a4084703ed4ffe4e8c0997b
   } else {
     return null;
   }
