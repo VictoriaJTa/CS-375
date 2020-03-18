@@ -17,8 +17,8 @@ function NavBar({active}) {
       text: "Bills"
     },
     {
-      path: "/stats",
-      text: "Stats"
+      path: "/bars",
+      text: "Bars"
     }
   ];
 

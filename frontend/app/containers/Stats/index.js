@@ -46,7 +46,7 @@ export function Stats({stats, onLoadHandler, loading, error}) {
     <div>
       <NavBar active="1" />    
       <Helmet>
-        <title>Stats | Bill Bar</title>
+        <title>Bars | Bill Bar</title>
         <meta name="description" content="Description of Stats" />
       </Helmet>
       <div className="container-fluid graph__container">
