@@ -4,15 +4,31 @@
  *
  */
 import produce from "immer";
-import { DEFAULT_ACTION } from "./constants";
+import {LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_ERROR} from "./constants";
 
-export const initialState = {};
+export const initialState = {
+  loading: false,
+  error: false,
+  stats: false,
+};
 
 /* eslint-disable default-case, no-param-reassign */
 const statsReducer = (state = initialState, action) =>
-  produce(state, (/* draft */) => {
+  produce(state, draft => {
     switch (action.type) {
-      case DEFAULT_ACTION:
+      case LOAD_STATS:
+        draft.loading = true;
+        draft.error = false;
+        break;
+
+      case LOAD_STATS_SUCCESS:
+        draft.loading = false;
+        draft.stats = action.stats;
+        break;
+
+      case LOAD_STATS_ERROR:
+        draft.loading = false;
+        draft.error = action.error;
         break;
     }
   });
