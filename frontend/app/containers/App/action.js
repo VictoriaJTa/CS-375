@@ -20,7 +20,7 @@ export function billError(error) {
     };
 }
 
-export function toggleFilterList() {
+export function toggleFilter() {
     return {
         type: TOGGLE_FILTER,
     }

@@ -17,10 +17,10 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import messages from './messages';
 import BillList from '../../components/BillList';
-import FilterList from '../../components/FilterList';
+import FilterList from '../../components/FilterList/Loadable';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
-import { loadBill, toggleFilterList, loadMore, loadLess } from '../App/action';
+import { loadBill, toggleFilter, loadMore, loadLess } from '../App/action';
 
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
@@ -28,7 +28,7 @@ import NavBar from '../../components/NavBar';
 
 const key = 'global';
 
-export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilter, filterOpen, onClickHandler, onClickHandlerLess}) {
+export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilterHandler, onClickHandler, onClickHandlerLess, visible}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
@@ -38,7 +38,11 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
     bills,
     toggleItem,
     onClickHandler,
-    onClickHandlerLess
+    onClickHandlerLess,
+  }
+
+  const filterProps = {
+    visible,
   }
 
   if (bills == false) {
@@ -52,10 +56,11 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
           <meta name="description" content="Description of Bills" />
         </Helmet>
       <Fragment>
+        <FilterList {...filterProps}/>
         <NavBar active="0" />      
         <div className="container-fluid">
           <div className="row filter__applied">
-            <i className="material-icons filter__toggle">tune</i>
+            <button onClick={toggleFilterHandler}><i className="material-icons filter__toggle">tune</i></button>
             {/* Insert filters here */}
           </div>
 
@@ -75,17 +80,17 @@ HomePage.propTypes = {
   bills: PropTypes.any,
   onLoadHandler: PropTypes.func,
   toggleItem: PropTypes.func,
-  toggleFilter: PropTypes.func,
-  filterOpen: PropTypes.bool,
+  toggleFilterHandler: PropTypes.func,
   onClickhandler: PropTypes.func,
   onClickHandlerLess: PropTypes.func,
+  visible: PropTypes.bool,
 }
 
 const mapStateToProps = createStructuredSelector({
   bills: makeSelectBills(),
   loading: makeSelectBillLoading(),
   error: makeSelectBillError(),
-  filterOpen: makeSelectFilter(),
+  visible: makeSelectFilter(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -101,9 +106,9 @@ export function mapDispatchToProps(dispatch) {
       let expand = target.closest('.expand__content');
       console.log(expand);
     },
-    toggleFilter: evt => {
+    toggleFilterHandler: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();
-      dispatch(toggleFilterList);
+      dispatch(toggleFilter());
     },
     onClickHandler: evt => {
       dispatch(loadMore());
