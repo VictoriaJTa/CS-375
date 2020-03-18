@@ -10151,6 +10151,7 @@ header .header__title h1 {
 footer {
   background: #494987;
   color: #fff;
+  margin-top: 3rem;
   padding: 3rem 1rem 4rem;
   text-align: left;
 }
@@ -10206,8 +10207,8 @@ nav {
   background: #fff;
   margin-bottom: 2.0rem;
   border-top: 2px solid #C92843;
-  -webkit-box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
-          box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.08);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -10605,10 +10606,9 @@ nav {
 
 .graph {
   background: #fff;
-  max-width: 400px;
-  margin-bottom: 2.0rem;
-  -webkit-box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
-          box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
+  margin-top: 2.0rem;
+  -webkit-box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.08);
 }
 
 .graph .graph__title {
@@ -10620,7 +10620,11 @@ nav {
 }
 
 .graph .graph__content {
-  padding: 0.5rem 1rem;
+  background: #3a3a57;
+}
+
+.graph .graph__content > div {
+  padding: 1.0rem 1rem;
 }
 
 .tabs {

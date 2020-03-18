@@ -20,12 +20,26 @@ function PieGraph ({stats, loading, error}) {
 
   if (stats !== false) {
     return (
-      <div>
-        <div style={{ margin: "55px", textAlign: "center" }}>
-          <PieChart width={350} height={250} data={stats.party} />
+      <div className="row">
+        <div className="col-12 col-md-6">
+          <div className="graph">
+            <div className="graph__title">Party</div>
+            <div className="graph__content">
+              <div style={{ width: '100%', height: '250px' }}>
+                <PieChart data={stats.party} />
+              </div>            
+            </div>
+          </div>
         </div>
-        <div style={{ margin: "55px", textAlign: "center" }}>
-          <PieChart width={350} height={250} data={stats.chamber} />
+        <div className="col-12 col-md-6">
+          <div className="graph">
+            <div className="graph__title">Chamber</div>
+            <div className="graph__content">
+              <div style={{ width: '100%', height: '250px' }}>
+                <PieChart data={stats.chamber} />
+              </div>                
+            </div>
+          </div>
         </div>
       </div>
     ); 
