@@ -68,7 +68,7 @@ HomePage.propTypes = {
   error: PropTypes.any,
   bills: PropTypes.any,
   onLoadHandler: PropTypes.func,
-  onClickHandler: PropTypes.func,
+  toggleItem: PropTypes.func,
   toggleFilter: PropTypes.func,
   filterOpen: PropTypes.bool,
   onClickhandler: PropTypes.func,
@@ -88,7 +88,7 @@ export function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadBill());
     },
-    onClickHandler: evt => {
+    toggleItem: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       
       const target = evt.target;

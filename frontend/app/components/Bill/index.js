@@ -64,7 +64,7 @@ function Bill(props) {
 
         <div className="bill__expand">
           <div className="expand__fade"></div>
-          <div className="expand__content" onClick={props.onClickHandler}>
+          <div className="expand__content" onClick={props.toggleItem}>
             <i className="material-icons">arrow_drop_down</i> 
             <span>Expand</span>
           </div>

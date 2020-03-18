@@ -41,7 +41,7 @@ function BillList({loading, error, bills, toggleItem, onClickHandler, onClickHan
   }
 
   if (bills !== false) {    
-    return <List items={bills} component={Bill} onClickHandler={onClickHandler} />;
+    return <List items={bills} component={Bill} toggleItem={toggleItem} />;
   } else {
     return null;
   }

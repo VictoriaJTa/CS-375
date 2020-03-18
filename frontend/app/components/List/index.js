@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 function List(props) {
   const ComponentToRender = props.component;
-  const OnClickHandler = props.onClickHandler;
+  const ToggleItem = props.toggleItem;
   let content = <div />;  
 
   // If we have items, render them
   try {
     if (props.items) {
       content = props.items.map((item, index) => (
-        <ComponentToRender key={index} item={item} onClickHandler={OnClickHandler} />
+        <ComponentToRender key={index} item={item} toggleItem={ToggleItem} />
       ));
     } else {
       // Otherwise render a single component
