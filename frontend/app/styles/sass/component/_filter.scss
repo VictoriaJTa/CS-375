@@ -9,9 +9,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100vh;
     background: rgba(0,0,0,0.4);
+    width: 100%;
+    height: 100vh;    
+    cursor: pointer;
   }
 
   .filter__menu {
@@ -26,7 +27,7 @@
       padding: 0.5rem 1.0rem;
 
       span, 
-      i {
+      button {
         display: inline-block;
         vertical-align: middle;
       }
@@ -37,11 +38,14 @@
         font-weight: 700;        
       }
 
-      i {
+      button {
         position: absolute;
         top: 1.0rem;
         right: 1.0rem;
+        background: transparent;
         cursor: pointer;
+        border: none;
+        outline: none;        
         
         &:hover {
           color: $color-primary;
