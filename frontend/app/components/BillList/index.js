@@ -20,7 +20,7 @@ flex-direction: row;
 justify-content: space-between;
 `;
 
-function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
+function BillList({loading, error, bills, toggleItem, onClickHandler, onClickHandlerLess}) {
   if (loading) {
     return <div className="loader"></div>;
   }
@@ -38,8 +38,8 @@ function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
     return <p className="message">Something Went Wrong</p>;
   }
 
-  if (bills !== false) {
-    return <List items={bills} component={Bill}/>;
+  if (bills !== false) {    
+    return <List items={bills} component={Bill} toggleItem={toggleItem} />;
   } else {
     return null;
   }
@@ -50,6 +50,7 @@ BillList.propTypes = {
   bills: PropTypes.any,
   loading: PropTypes.bool,
   error: PropTypes.any,
+  toggleItem: PropTypes.func,
   onClickHandler: PropTypes.func,
   onClickHandlerLess: PropTypes.func,
 };
