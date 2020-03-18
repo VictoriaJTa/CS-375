@@ -12,9 +12,7 @@ let db = new dbmanager.DBManager(CONFIG);
 // Set up basic app
 app = express();
 app.use(cors());
-app.get('/', function(req, res) {
-  res.send('Success!');
-});
+app.use(express.static("public"));
 
 // Bill endpoint
 app.get('/bill', function(req, res) {
