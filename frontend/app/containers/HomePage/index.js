@@ -24,9 +24,14 @@ import { loadBill, toggleFilter, loadMore, loadLess } from '../App/action';
 
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
+import styled from 'styled-components';
 
 
 const key = 'global';
+
+const Button = styled.button`
+
+`
 
 export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilterHandler, onClickHandler, onClickHandlerLess, visible}) {
   useInjectReducer({key, reducer});
@@ -60,7 +65,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
         <NavBar active="0" />      
         <div className="container-fluid">
           <div className="row filter__applied">
-            <button onClick={toggleFilterHandler}><i className="material-icons filter__toggle">tune</i></button>
+            <Button onClick={toggleFilterHandler} className="material-icons filter__toggle">tune</Button>
             {/* Insert filters here */}
           </div>
 
