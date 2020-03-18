@@ -10341,6 +10341,15 @@ header .header__title .header__filter {
   font-weight: 700;
 }
 
+.filter__list {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5000;
+}
+
 .filter__list .filter__overlay {
   position: absolute;
   top: 0;
@@ -10351,6 +10360,9 @@ header .header__title .header__filter {
 }
 
 .filter__list .filter__menu {
+  position: absolute;
+  top: 0;
+  right: -275px;
   width: 275px;
   height: 100vh;
   background: #fff;
@@ -10521,6 +10533,39 @@ header .header__title .header__filter {
 .tabs .tab.active {
   background: #C92843;
   font-weight: 700;
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 2rem;
+  border: 8px solid #dddddd;
+  border-top: 8px solid #494987;
+  border-radius: 50%;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 .message {
