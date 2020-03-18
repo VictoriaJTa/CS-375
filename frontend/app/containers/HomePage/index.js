@@ -19,21 +19,23 @@ import BillList from '../../components/BillList';
 import FilterList from '../../components/FilterList';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
-import { loadBill, toggleFilterList } from '../App/action';
+import { loadBill, toggleFilterList, loadMore, loadLess } from '../App/action';
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
 
 
 const key = 'global';
 
-export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, filterOpen}) {
+export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, filterOpen, onClickHandler, onClickHandlerLess}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
   const billListProps = {
     loading,
     error,
-    bills
+    bills,
+    onClickHandler,
+    onClickHandlerLess
   }
 
   if (bills == false) {
@@ -65,6 +67,8 @@ HomePage.propTypes = {
   onLoadHandler: PropTypes.func,
   toggleFilter: PropTypes.func,
   filterOpen: PropTypes.bool,
+  onClickhandler: PropTypes.func,
+  onClickHandlerLess: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -83,6 +87,14 @@ export function mapDispatchToProps(dispatch) {
     toggleFilter: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();
       dispatch(toggleFilterList);
+    },
+    onClickHandler: evt => {
+      dispatch(loadMore());
+      window.scrollTo(0, 0);
+    },
+    onClickHandlerLess: evt => {
+      dispatch(loadLess());
+      window.scrollTo(0, 0);
     }
   };
 }
