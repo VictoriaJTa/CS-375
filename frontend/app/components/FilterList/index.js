@@ -10,7 +10,7 @@ import React from "react";
 import FilterGroup from '../FilterGroup';
 
 
-function FilterList({visible}) {
+function FilterList({visible, toggleFilterHandler}) {
   const stuff = {
     filters: [
       {
@@ -33,7 +33,7 @@ function FilterList({visible}) {
             <div className="filter__menu">
               <div className="filter__title">
                 <span>Filter</span>
-                <i className="material-icons">close</i>
+                <button onClick={toggleFilterHandler} className="material-icons">close</button>
               </div>
 
               <div className="filter__date">

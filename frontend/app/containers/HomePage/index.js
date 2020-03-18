@@ -48,6 +48,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
 
   const filterProps = {
     visible,
+    toggleFilterHandler,
   }
 
   if (bills == false) {

@@ -33,6 +33,8 @@ export function Stats({stats, onLoadHandler}) {
 
   console.log(stats);
 
+  
+
   return (
     <div>
       <NavBar active="1" />    
