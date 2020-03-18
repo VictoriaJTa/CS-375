@@ -16,19 +16,21 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 import '../../styles/styles.css';
 
 export default function App() {
   return (
     <div> 
-      <Header />           
+      <Header />              
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/stats" component={Stats}/>
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
+      <Footer />   
     </div>
   );
 }

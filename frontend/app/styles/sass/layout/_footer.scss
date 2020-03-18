@@ -1,0 +1,39 @@
+footer {
+  background: $color-primary;
+  color: #fff;
+  padding: 3rem 1rem 4rem;
+  text-align: left;
+  
+
+  @media (min-width: $bp-sm) {
+    text-align: center;
+  }
+
+  .footer__copyright {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .footer__credits {
+    > span {
+      display: block;
+      margin-bottom: 0.1rem;
+      margin-right: 0.4rem;
+      font-style: italic;
+
+      @media (min-width: $bp-sm) {
+        display: inline;
+        margin-bottom: 0;
+      }
+
+      > span {
+        display: none;
+
+        @media (min-width: $bp-sm) {
+          display: inline;
+        }
+      }
+    }
+  }
+}

@@ -10148,6 +10148,49 @@ header .header__title h1 {
   font-size: 2.0rem;
 }
 
+footer {
+  background: #494987;
+  color: #fff;
+  padding: 3rem 1rem 4rem;
+  text-align: left;
+}
+
+@media (min-width: 576px) {
+  footer {
+    text-align: center;
+  }
+}
+
+footer .footer__copyright {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+footer .footer__credits > span {
+  display: block;
+  margin-bottom: 0.1rem;
+  margin-right: 0.4rem;
+  font-style: italic;
+}
+
+@media (min-width: 576px) {
+  footer .footer__credits > span {
+    display: inline;
+    margin-bottom: 0;
+  }
+}
+
+footer .footer__credits > span > span {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  footer .footer__credits > span > span {
+    display: inline;
+  }
+}
+
 nav {
   background: #494987;
   margin-bottom: 1rem;
@@ -10217,7 +10260,7 @@ nav {
 .bill__list .bill .bill__content .bill__header .bill__summary {
   margin: 0;
   padding: 0.5rem 3rem 0.5rem 1rem;
-  text-indent: 2rem;
+  text-indent: 3rem;
   border-bottom: 1px solid #E5E5E5;
 }
 
