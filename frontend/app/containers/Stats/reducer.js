@@ -4,12 +4,12 @@
  *
  */
 import produce from "immer";
-import { LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_ERROR } from "./constants";
+import {LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_ERROR} from "./constants";
 
 export const initialState = {
   loading: false,
   error: false,
-  bills: false
+  stats: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -23,7 +23,7 @@ const statsReducer = (state = initialState, action) =>
 
       case LOAD_STATS_SUCCESS:
         draft.loading = false;
-        draft.stats = action.stats.stats;
+        draft.stats = action.stats;
         break;
 
       case LOAD_STATS_ERROR:

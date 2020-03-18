@@ -11,39 +11,32 @@ import { Helmet } from "react-helmet";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
 
-import BillList from '../../components/BillList';
-//import Graphs from '../../components/'
-
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import makeSelectStats from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
+import NavBar from '../../components/NavBar';
 
-export function Stats({loading, error, bills, onLoadHandler}) {
+import {loadStats} from './actions';
+
+export function Stats({stats, onLoadHandler}) {
   useInjectReducer({ key: "stats", reducer });
   useInjectSaga({ key: "stats", saga });
 
-  const billListProps = {
-    loading,
-    error,
-    bills
-  }
-
-  if (bills == false) {
+  if (stats.stats == false) {
     onLoadHandler();
   }
 
+  console.log(stats);
+
   return (
     <div>
+      <NavBar active="1" />    
       <Helmet>
         <title>Stats</title>
         <meta name="description" content="Description of Stats" />
       </Helmet>
-      <div>
-        <p>Hello</p>
-        <BillList {...billListProps} />
-      </div>
     </div>
   );
 }
@@ -58,6 +51,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    onLoadHandler: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(loadStats());
+    },
     dispatch
   };
 }
@@ -67,5 +64,4 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-export default compose(withConnect)
-  (Stats);
+export default compose(withConnect)(Stats);

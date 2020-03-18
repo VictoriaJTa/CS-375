@@ -15,19 +15,19 @@ import Stats from 'containers/Stats/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
-import Header from '../../components/Header';
 import FilterList from '../../components/FilterList';
+import Header from '../../components/Header';
 
 import '../../styles/styles.css';
 
 export default function App() {
   return (
-    <div>
-      <Header />
+    <div> 
+      <Header />     
       <FilterList />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/stats" component={Stats} />
+        <Route path="/stats" component={Stats}/>
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

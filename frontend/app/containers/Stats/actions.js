@@ -12,14 +12,14 @@ export function loadStats() {
   };
 }
 
-export function loadStats(stats) {
+export function statsLoaded(stats) {
   return {
     type: LOAD_STATS_SUCCESS,
     stats
   };
 }
 
-export function loadStats(error) {
+export function statsError(error) {
   return {
     type: LOAD_STATS_ERROR,
     error

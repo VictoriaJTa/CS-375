@@ -11,3 +11,4 @@
 export const LOAD_BILL = 'billbar/App/LOAD_BILL';
 export const LOAD_BILL_SUCCESS = 'billbar/App/LOAD_BILL_SUCCESS';
 export const LOAD_BILL_ERROR = 'billbar/App/LOAD_BILL_ERROR';
+export const TOGGLE_FILTER = 'billbar/App/TOGGLE_FILTER';
