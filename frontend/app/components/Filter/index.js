@@ -1,9 +1,5 @@
 import React from 'react'
 
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import PropTypes from 'prop-types';
-
 function Filter({filter, toggleItem}) {
   return (
     <li className="filter" onClick={toggleItem}>

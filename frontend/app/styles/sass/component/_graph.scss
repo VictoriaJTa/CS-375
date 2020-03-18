@@ -1,20 +1,31 @@
-.graph {
-  background: #fff;
-  margin-top: 2.0rem;
-  box-shadow: 2px 2px 6px 2px rgba(0,0,0,0.08);
-
-  .graph__title {
-    padding: 0.5rem 1.0rem;
-    font-family: $font-header;
-    font-size: 1.15rem;    
-    font-weight: 700;
-    border-bottom: 1px solid $color-gray-light;
+.graph__container {
+  > div > div {
+    padding: 0;
+    
+    @media (min-width: $bp-md) {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
   }
 
-  .graph__content {
-    background: $color-primary-background;
-    > div {
-      padding: 1.0rem 1rem;
+  .graph {
+    background: #fff;
+    margin-top: 2.0rem;
+    box-shadow: 2px 2px 6px 2px rgba(0,0,0,0.08);
+  
+    .graph__title {
+      padding: 0.5rem 1.0rem;
+      font-family: $font-header;
+      font-size: 1.15rem;    
+      font-weight: 700;
+      border-bottom: 1px solid $color-gray-light;
+    }
+  
+    .graph__content {
+      background: $color-primary-background;
+      > div {
+        padding: 1.0rem 1rem;
+      }
     }
   }
 }

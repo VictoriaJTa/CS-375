@@ -10113,6 +10113,18 @@ body, p, label {
   font-family: "Montserrat", sans-serif;
 }
 
+.container-fluid {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
 .row {
   max-width: 768px;
   margin: 0 auto;
@@ -10640,14 +10652,25 @@ nav {
   margin-left: 0.25rem;
 }
 
-.graph {
+.graph__container > div > div {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .graph__container > div > div {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.graph__container .graph {
   background: #fff;
   margin-top: 2.0rem;
   -webkit-box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.08);
           box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.08);
 }
 
-.graph .graph__title {
+.graph__container .graph .graph__title {
   padding: 0.5rem 1.0rem;
   font-family: "Roboto Slab", serif;
   font-size: 1.15rem;
@@ -10655,11 +10678,11 @@ nav {
   border-bottom: 1px solid #E5E5E5;
 }
 
-.graph .graph__content {
+.graph__container .graph .graph__content {
   background: #3a3a57;
 }
 
-.graph .graph__content > div {
+.graph__container .graph .graph__content > div {
   padding: 1.0rem 1rem;
 }
 
