@@ -20,9 +20,13 @@ export function* getBill() {
     }
 }
 
+export function* getBill2() {
+    yield put({type: LOAD_BILL});
+}
+
 export default function* loadBill() {
     yield takeLatest(LOAD_BILL, getBill);
     yield takeLatest(LOAD_MORE, getBill);
     yield takeLatest(LOAD_LESS, getBill);
-    yield takeLatest(FILTER, getBill);
+    yield takeLatest(FILTER, getBill2);
 }

@@ -54,9 +54,6 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
     toggleItem,
   }
 
-  if (bills == false) {
-    onLoadHandler();
-  }
 
   useEffect(() => {
     onLoadHandler();
