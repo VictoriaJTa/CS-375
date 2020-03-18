@@ -26,7 +26,7 @@ export default function App() {
       <Header />              
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/stats" component={Stats}/>
+        <Route path="/bars" component={Stats}/>
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
