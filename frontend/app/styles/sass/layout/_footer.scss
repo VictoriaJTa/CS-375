@@ -4,26 +4,43 @@ footer {
   margin-top: 3rem;
   padding: 3rem 1rem 4rem;
   text-align: left;
-  
 
-  @media (min-width: $bp-sm) {
-    text-align: center;
-  }
-
-  .footer__copyright {
-    display: inline-block;
+  .footer__copyright {    
     margin-bottom: 0.5rem;
-    font-weight: 700;
+    text-align: left;
+
+    @media (min-width: $bp-md) {
+      text-align: center;
+    }
+    
+    span {
+      display: block;
+      margin-bottom: 0.1rem;
+
+      @media (min-width: $bp-md) {
+        margin-bottom: 0;
+      }
+
+      &:first-child {
+        font-weight: 700;
+      }
+    }
   }
 
   .footer__credits {
+    text-align: right;
+
+    @media (min-width: $bp-md) {
+      text-align: center;
+    }
+
     > span {
       display: block;
       margin-bottom: 0.1rem;
       margin-right: 0.4rem;
       font-style: italic;
 
-      @media (min-width: $bp-sm) {
+      @media (min-width: $bp-md) {
         display: inline;
         margin-bottom: 0;
       }
@@ -31,7 +48,7 @@ footer {
       > span {
         display: none;
 
-        @media (min-width: $bp-sm) {
+        @media (min-width: $bp-md) {
           display: inline;
         }
       }
