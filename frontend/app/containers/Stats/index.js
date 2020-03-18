@@ -37,6 +37,9 @@ export function Stats({stats, onLoadHandler}) {
         <title>Stats</title>
         <meta name="description" content="Description of Stats" />
       </Helmet>
+      <div>
+        
+      </div>
     </div>
   );
 }
