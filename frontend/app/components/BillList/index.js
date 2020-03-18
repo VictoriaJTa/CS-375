@@ -34,8 +34,6 @@ function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
             </div>;
   }
 
-
-
   if (error !== false) {
     return <p className="message">Something Went Wrong</p>;
   }
