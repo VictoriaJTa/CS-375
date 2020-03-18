@@ -10218,6 +10218,10 @@ nav {
   overflow: hidden;
 }
 
+.bill__list .bill .bill__content.active {
+  max-height: none;
+}
+
 .bill__list .bill .bill__content .bill__vote {
   padding: 0.75rem 1rem;
 }
@@ -10388,6 +10392,10 @@ nav {
   background: #fff;
 }
 
+.bill__list .bill .bill__expand .expand__content.active .expand__inactive {
+  display: none;
+}
+
 .bill__list .bill .bill__expand .expand__content.active .expand__active {
   display: block;
 }
@@ -10400,6 +10408,10 @@ nav {
 .bill__list .bill .bill__expand .expand__content span {
   text-transform: uppercase;
   font-weight: 700;
+}
+
+.bill__list .bill .bill__expand .expand__content .expand__inactive {
+  display: block;
 }
 
 .bill__list .bill .bill__expand .expand__content .expand__active {

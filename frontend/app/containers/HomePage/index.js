@@ -123,16 +123,10 @@ export function mapDispatchToProps(dispatch) {
 
       if (expand.classList.contains('active')) {
         expand.classList.remove('active');
-        expand.querySelector('.expand__inactive').style.display = 'block';
-        expand.querySelector('.expand__active').style.display = 'none';
-
-        content.style.maxHeight = '180px';
+        content.classList.remove('active');
       } else {
         expand.classList.add('active');
-        expand.querySelector('.expand__inactive').style.display = 'none';
-        expand.querySelector('.expand__active').style.display = 'block';
-
-        content.style.maxHeight = 'none';
+        content.classList.add('active');
       }
     },
     toggleFilterHandler: evt => {
@@ -141,10 +135,30 @@ export function mapDispatchToProps(dispatch) {
     },
     onClickHandler: evt => {
       dispatch(loadMore());
+
+      let expandedItems = document.querySelectorAll('.expand__content.active');
+      for (let i=0; i<expandedItems.length; i++) {
+        let item = expandedItems[i];
+        let content = item.parentNode.previousSibling;
+        
+        item.classList.remove('active');
+        content.classList.remove('active');
+      }
+
       window.scrollTo(0, 0);
     },
     onClickHandlerLess: evt => {
       dispatch(loadLess());
+
+      let expandedItems = document.querySelectorAll('.expand__content.active');
+      for (let i=0; i<expandedItems.length; i++) {
+        let item = expandedItems[i];
+        let content = item.parentNode.previousSibling;
+
+        item.classList.remove('active');
+        content.classList.remove('active');
+      }
+
       window.scrollTo(0, 0);
     }
   };
