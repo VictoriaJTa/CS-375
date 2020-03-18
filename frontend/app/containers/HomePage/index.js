@@ -16,10 +16,12 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import messages from './messages';
 import BillList from '../../components/BillList';
-import Filter from '../../components/Filter';
+import FilterList from '../../components/FilterList';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
 import { loadBill, toggleFilterList } from '../App/action';
+import Sidebar from 'react-sidebar';
+import { Fragment } from 'react';
 
 
 const key = 'global';
@@ -39,8 +41,16 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
   }
 
   return (
-    <div className="container-fluid">
+    <Fragment>
+      <Sidebar
+        sidebar={<FilterList />}
+        open={toggleFilter}
+        onSetOpen={filterOpen}>
+      </Sidebar>
+
+      <div className="container-fluid">
         <div className="row filter__applied">
+          <i className="material-icons header__filter">tune</i>
           {/* Insert filters here */}
         </div>
 
@@ -48,6 +58,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
           <BillList {...billListProps} />
         </div>        
       </div>
+    </Fragment>
   );
 }
 
