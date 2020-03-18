@@ -16,10 +16,12 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import messages from './messages';
 import BillList from '../../components/BillList';
-import Filter from '../../components/Filter';
+import FilterList from '../../components/FilterList';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
 import { loadBill, toggleFilterList } from '../App/action';
+import { Fragment } from 'react';
+import NavBar from '../../components/NavBar';
 
 
 const key = 'global';
@@ -39,8 +41,11 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
   }
 
   return (
-    <div className="container-fluid">
+    <Fragment>
+      <NavBar active="0" />      
+      <div className="container-fluid">
         <div className="row filter__applied">
+          <i className="material-icons filter__toggle">tune</i>
           {/* Insert filters here */}
         </div>
 
@@ -48,6 +53,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
           <BillList {...billListProps} />
         </div>        
       </div>
+    </Fragment>
   );
 }
 

@@ -10125,7 +10125,6 @@ i:hover {
 
 header {
   background: #494987;
-  margin-bottom: 1rem;
   -webkit-box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.08);
           box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.08);
 }
@@ -10149,10 +10148,9 @@ header .header__title h1 {
   font-size: 2.0rem;
 }
 
-header .header__title .header__filter {
-  position: absolute;
-  top: 0.35rem;
-  right: 0;
+nav {
+  background: #494987;
+  margin-bottom: 1rem;
 }
 
 .bill__list ul {
@@ -10446,8 +10444,22 @@ header .header__title .header__filter {
 }
 
 .filter__applied {
+  position: relative;
+  padding-top: 1.0rem;
+  padding-bottom: 1.25rem;
+  padding-right: 1.25rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+
+.filter__applied .filter__toggle {
+  position: absolute;
+  top: 0.35rem;
+  right: 0;
+}
+
+.filter__applied .filter__toggle:hover {
+  color: #494987;
 }
 
 .filter__applied .filter {
