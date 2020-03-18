@@ -10534,4 +10534,43 @@ header .header__title .header__filter {
   background: #C92843;
   font-weight: 700;
 }
+
+.loader {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 2rem;
+  border: 8px solid #dddddd;
+  border-top: 8px solid #494987;
+  border-radius: 50%;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.message {
+  text-align: center;
+  font-style: italic;
+  font-weight: 500;
+}
 /*# sourceMappingURL=styles.css.map */
