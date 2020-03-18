@@ -10363,7 +10363,6 @@ nav {
 }
 
 .filter__list {
-  display: none;
   position: fixed;
   top: 0;
   width: 100%;
@@ -10383,7 +10382,7 @@ nav {
 .filter__list .filter__menu {
   position: absolute;
   top: 0;
-  right: -275px;
+  right: 0;
   width: 275px;
   height: 100vh;
   background: #fff;
@@ -10475,19 +10474,25 @@ nav {
   margin-top: 1rem;
 }
 
-.filter__applied .filter__toggle {
+.filter__applied button {
+  background: transparent;
   position: absolute;
   top: 0.35rem;
   right: 0;
+  border: none;
+  outline: none;
+}
+
+.filter__applied button:hover i {
+  background: #494987;
+  color: #fff;
+}
+
+.filter__applied button i {
   padding: 0.5rem;
   border-radius: 50%;
   -webkit-transition: background 0.1s, color 0.1s;
   transition: background 0.1s, color 0.1s;
-}
-
-.filter__applied .filter__toggle:hover {
-  background: #494987;
-  color: #fff;
 }
 
 .filter__applied .filter {
@@ -10510,7 +10515,7 @@ nav {
 
 .filter:hover {
   background: rgba(75, 104, 136, 0.04);
-  color: #C92843;
+  color: #6060AC;
   border-color: #494987;
 }
 

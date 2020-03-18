@@ -15,7 +15,6 @@ import Stats from 'containers/Stats/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
-import FilterList from '../../components/FilterList';
 import Header from '../../components/Header';
 
 import '../../styles/styles.css';
@@ -23,8 +22,7 @@ import '../../styles/styles.css';
 export default function App() {
   return (
     <div> 
-      <Header />     
-      <FilterList />
+      <Header />           
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/stats" component={Stats}/>

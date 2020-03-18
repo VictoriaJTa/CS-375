@@ -65,7 +65,9 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
         <NavBar active="0" />      
         <div className="container-fluid">
           <div className="row filter__applied">
-            <Button onClick={toggleFilterHandler} className="material-icons filter__toggle">tune</Button>
+            <button onClick={toggleFilterHandler} className="filter__toggle">
+              <i className="material-icons">tune</i>
+            </button>
             {/* Insert filters here */}
           </div>
 
