@@ -25,6 +25,7 @@ import { loadBill, toggleFilter, loadMore, loadLess } from '../App/action';
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 
 const key = 'global';
@@ -54,6 +55,10 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
   if (bills == false) {
     onLoadHandler();
   }
+
+  useEffect(() => {
+    onLoadHandler();
+  }, []);
 
   return (
     <div>
