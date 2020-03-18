@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 function List(props) {
   const ComponentToRender = props.component;
-  let content = <div />;
+  const ToggleItem = props.toggleItem;
+  let content = <div />;  
 
   // If we have items, render them
   try {
     if (props.items) {
       content = props.items.map((item, index) => (
-        <ComponentToRender key={index} item={item} />
+        <ComponentToRender key={index} item={item} toggleItem={ToggleItem} />
       ));
     } else {
       // Otherwise render a single component
@@ -31,6 +32,9 @@ function List(props) {
 List.propTypes = {
   component: PropTypes.elementType.isRequired,
   items: PropTypes.array,
+  toggleItem: PropTypes.func,
+  onClickHandler: PropTypes.func,
 };
+
 
 export default List;

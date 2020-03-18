@@ -15,8 +15,7 @@
       max-height: 180px;
       overflow: hidden;
 
-      .bill__vote,
-      .bill__details {
+      .bill__vote {
         padding: 0.75rem 1rem;
       }
     
@@ -55,7 +54,8 @@
     
         .bill__summary {
           margin: 0;
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 3rem 0.5rem 1rem;
+          text-indent: 2rem;
           border-bottom: 1px solid $color-gray-light;
         }  
       }
@@ -110,6 +110,8 @@
       }
     
       .bill__details {
+        padding: 0.75rem 1rem 2rem;
+
         .detail {
           margin-bottom: 0.5rem;
     
@@ -165,6 +167,19 @@
           background: $color-primary-hover;
           color: $color-gray-light;
         }
+
+        &.active {          
+          background: #E5E5E5;
+          color: #15212D;      
+          
+          &:hover {
+            background: #fff;
+          }
+
+          .expand__active {
+            display: block;
+          }
+        }
       
         i, span {
           display: inline-block;
@@ -174,6 +189,10 @@
         span {
           text-transform: uppercase;
           font-weight: 700;    
+        }
+
+        .expand__active {
+          display: none;          
         }
       }
     }

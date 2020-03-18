@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,17 +17,18 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import messages from './messages';
 import BillList from '../../components/BillList';
-import FilterList from '../../components/FilterList';
+import FilterList from '../../components/FilterList/Loadable';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
-import { loadBill, toggleFilterList, loadMore, loadLess } from '../App/action';
+import { loadBill, toggleFilter, loadMore, loadLess } from '../App/action';
+
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
 
 
 const key = 'global';
 
-export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, filterOpen, onClickHandler, onClickHandlerLess}) {
+export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilterHandler, onClickHandler, onClickHandlerLess, visible}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
@@ -34,8 +36,13 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
     loading,
     error,
     bills,
+    toggleItem,
     onClickHandler,
-    onClickHandlerLess
+    onClickHandlerLess,
+  }
+
+  const filterProps = {
+    visible,
   }
 
   if (bills == false) {
@@ -43,19 +50,26 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
   }
 
   return (
-    <Fragment>
-      <NavBar active="0" />      
-      <div className="container-fluid">
-        <div className="row filter__applied">
-          <i className="material-icons filter__toggle">tune</i>
-          {/* Insert filters here */}
-        </div>
+    <div>
+        <Helmet>
+          <title>Bills</title>
+          <meta name="description" content="Description of Bills" />
+        </Helmet>
+      <Fragment>
+        <FilterList {...filterProps}/>
+        <NavBar active="0" />      
+        <div className="container-fluid">
+          <div className="row filter__applied">
+            <button onClick={toggleFilterHandler}><i className="material-icons filter__toggle">tune</i></button>
+            {/* Insert filters here */}
+          </div>
 
-        <div className="bill__list">
-          <BillList {...billListProps} />
-        </div>        
-      </div>
-    </Fragment>
+          <div className="bill__list">
+            <BillList {...billListProps} />
+          </div>        
+        </div>
+      </Fragment>
+    </div>
   );
 }
 
@@ -65,17 +79,18 @@ HomePage.propTypes = {
   error: PropTypes.any,
   bills: PropTypes.any,
   onLoadHandler: PropTypes.func,
-  toggleFilter: PropTypes.func,
-  filterOpen: PropTypes.bool,
+  toggleItem: PropTypes.func,
+  toggleFilterHandler: PropTypes.func,
   onClickhandler: PropTypes.func,
   onClickHandlerLess: PropTypes.func,
+  visible: PropTypes.bool,
 }
 
 const mapStateToProps = createStructuredSelector({
   bills: makeSelectBills(),
   loading: makeSelectBillLoading(),
   error: makeSelectBillError(),
-  filterOpen: makeSelectFilter(),
+  visible: makeSelectFilter(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -84,9 +99,30 @@ export function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadBill());
     },
-    toggleFilter: evt => {
+    toggleItem: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      
+      const target = evt.target;
+      let expand = target.closest('.expand__content');
+      let content = expand.parentNode.previousSibling;
+
+      if (expand.classList.contains('active')) {
+        expand.classList.remove('active');
+        expand.querySelector('.expand__inactive').style.display = 'block';
+        expand.querySelector('.expand__active').style.display = 'none';
+
+        content.style.maxHeight = '180px';
+      } else {
+        expand.classList.add('active');
+        expand.querySelector('.expand__inactive').style.display = 'none';
+        expand.querySelector('.expand__active').style.display = 'block';
+
+        content.style.maxHeight = 'none';
+      }            
+    },
+    toggleFilterHandler: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();
-      dispatch(toggleFilterList);
+      dispatch(toggleFilter());
     },
     onClickHandler: evt => {
       dispatch(loadMore());
