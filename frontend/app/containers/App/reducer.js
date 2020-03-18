@@ -51,6 +51,7 @@ const appReducer = (state = initialState, action) =>
                 break;
             
             case FILTER:
+                console.log(state.fil);
                 draft.fil = state.fil;
                 let exist = false;
                 for (var i in state.fil) {
