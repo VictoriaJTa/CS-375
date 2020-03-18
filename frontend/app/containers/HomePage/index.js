@@ -34,7 +34,7 @@ const Button = styled.button`
 
 `
 
-export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilterHandler, onClickHandler, onClickHandlerLess, visible}) {
+export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilterHandler, onClickHandler, onClickHandlerLess, visible, blahHandler}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
@@ -50,6 +50,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
   const filterProps = {
     visible,
     toggleFilterHandler,
+    blahHandler,
   }
 
   if (bills == false) {
@@ -97,6 +98,7 @@ HomePage.propTypes = {
   onClickhandler: PropTypes.func,
   onClickHandlerLess: PropTypes.func,
   visible: PropTypes.bool,
+  blahHandler: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -131,7 +133,7 @@ export function mapDispatchToProps(dispatch) {
         expand.querySelector('.expand__active').style.display = 'block';
 
         content.style.maxHeight = 'none';
-      }            
+      }
     },
     toggleFilterHandler: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();

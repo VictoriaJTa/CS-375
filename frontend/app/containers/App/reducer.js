@@ -1,4 +1,4 @@
-import {LOAD_BILL, LOAD_BILL_SUCCESS, LOAD_BILL_ERROR, TOGGLE_FILTER, LOAD_MORE, LOAD_LESS} from './constants';
+import {LOAD_BILL, LOAD_BILL_SUCCESS, LOAD_BILL_ERROR, TOGGLE_FILTER, LOAD_MORE, LOAD_LESS, FILTER} from './constants';
 import produce from 'immer';
 export const initialState = {
     loading: false,
@@ -6,6 +6,7 @@ export const initialState = {
     bills:false,
     filter: false,
     page: 0,
+    fil: '',
 }
 
 const appReducer = (state = initialState, action) =>
@@ -48,7 +49,10 @@ const appReducer = (state = initialState, action) =>
                     draft.page -= 1;
                 }
                 break;
-
+            
+            case FILTER:
+                draft.fil = action.fil;
+                break;
         }
     });
 
