@@ -145,7 +145,21 @@ export function mapDispatchToProps(dispatch) {
       window.scrollTo(0, 0);
     },
     toggleItem: evt => {
-      let value = evt.target.closest('.filter').getAttribute('value');
+      let target = evt.target.closest('.filter');
+      let value = target.getAttribute('value');
+
+      if (target.classList.contains('active')) {
+        target.classList.remove('active');
+      } else {
+        let activeItems = target.parentNode.querySelectorAll('.filter.active');
+        for (let i=0; i<activeItems.length; i++) {
+          let activeItem = activeItems[i];
+          activeItem.classList.remove('active');
+        }
+
+        target.classList.add('active');
+      }
+
       dispatch(changeFilter(value));
     },
   };

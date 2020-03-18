@@ -11,7 +11,6 @@ export function* getBill() {
     let filter = filters.join("&");
     
     const requestURL = `http://localhost:8080/bill?page=${page}&${filter}`;
-    console.log(requestURL);
     try {
         const bills = yield call(request, requestURL);
         yield put(billLoaded(bills));
