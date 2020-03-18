@@ -20,8 +20,8 @@ import FilterList from '../../components/FilterList';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
 import { loadBill, toggleFilterList } from '../App/action';
-import Sidebar from 'react-sidebar';
 import { Fragment } from 'react';
+import NavBar from '../../components/NavBar';
 
 
 const key = 'global';
@@ -42,15 +42,10 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
 
   return (
     <Fragment>
-      <Sidebar
-        sidebar={<FilterList />}
-        open={toggleFilter}
-        onSetOpen={filterOpen}>
-      </Sidebar>
-
+      <NavBar active="0" />      
       <div className="container-fluid">
         <div className="row filter__applied">
-          <i className="material-icons header__filter">tune</i>
+          <i className="material-icons filter__toggle">tune</i>
           {/* Insert filters here */}
         </div>
 

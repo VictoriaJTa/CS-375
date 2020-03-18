@@ -16,9 +16,7 @@ function Header({toggleSideBar}) {
         <div className="col-12">
         <h1>Bill Bar</h1>        
         </div>
-      </div>
-
-      <NavBar />
+      </div>      
     </header>    
   );
 }
