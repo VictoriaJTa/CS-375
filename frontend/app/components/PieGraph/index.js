@@ -20,8 +20,13 @@ function PieGraph ({stats, loading, error}) {
 
   if (stats !== false) {
     return (
-      <div style={{ margin: "55px", textAlign: "center" }}>
-        <PieChart width={350} height={250} data={stats.party} />
+      <div>
+        <div style={{ margin: "55px", textAlign: "center" }}>
+          <PieChart width={350} height={250} data={stats.party} />
+        </div>
+        <div style={{ margin: "55px", textAlign: "center" }}>
+          <PieChart width={350} height={250} data={stats.chamber} />
+        </div>
       </div>
     ); 
   } else return null;

@@ -141,7 +141,7 @@ app.get('/stats', function(req, res) {
 				for (let i=0; i<rows.length; i++) {
 					let row = rows[i];
 
-					data.chamber.push({ chamber: row.chamber, count: row.chamberCount });
+					data.chamber.push({ key: row.chamber, data: row.chamberCount });
 				}
 
 				statmod.party(conn, function(value, rows) {
@@ -167,13 +167,13 @@ app.get('/stats', function(req, res) {
 								for (let i=0; i<rows.length; i++) {
 									let row = rows[i];
 
-									data.vote_result.push({ vote_result: row.result, count: row.resultCount });
+									data.vote_result.push({ key: row.result, data: row.resultCount });
 								}
 
 								statmod.vote(conn, function(value, rows) {
 									// Vote distributions
 									if (value <0) {
-										console.log('Error while trying to retrieve vote diistribution.');
+										console.log('Error while trying to retrieve vote distribution.');
 										res.statusCode = 500;
 										res.send('Error: Issue while trying to retrieve vote distribution.');
 									} else {
