@@ -29,7 +29,9 @@ function BarGraph ({stats, loading, error}) {
 
 
 BarGraph.propTypes = {
-  data: PropTypes.any,
+  stats: PropTypes.any,
+  loading: PropTypes.bool,
+  error: PropTypes.any,
 }
 
 export default BarGraph;
