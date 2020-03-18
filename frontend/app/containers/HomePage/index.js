@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -43,19 +44,25 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
   }
 
   return (
-    <Fragment>
-      <NavBar active="0" />      
-      <div className="container-fluid">
-        <div className="row filter__applied">
-          <i className="material-icons filter__toggle">tune</i>
-          {/* Insert filters here */}
-        </div>
+    <div>
+        <Helmet>
+          <title>Bills</title>
+          <meta name="description" content="Description of Bills" />
+        </Helmet>
+      <Fragment>
+        <NavBar active="0" />      
+        <div className="container-fluid">
+          <div className="row filter__applied">
+            <i className="material-icons filter__toggle">tune</i>
+            {/* Insert filters here */}
+          </div>
 
-        <div className="bill__list">
-          <BillList {...billListProps} />
-        </div>        
-      </div>
-    </Fragment>
+          <div className="bill__list">
+            <BillList {...billListProps} />
+          </div>        
+        </div>
+      </Fragment>
+    </div>
   );
 }
 
