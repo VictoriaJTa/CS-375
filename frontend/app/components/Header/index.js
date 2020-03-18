@@ -24,5 +24,4 @@ function Header({toggleSideBar}) {
   );
 }
 
-
 export default Header;
