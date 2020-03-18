@@ -10603,6 +10603,26 @@ nav {
   margin-left: 0.25rem;
 }
 
+.graph {
+  background: #fff;
+  max-width: 400px;
+  margin-bottom: 2.0rem;
+  -webkit-box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
+          box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.08);
+}
+
+.graph .graph__title {
+  padding: 0.5rem 1.0rem;
+  font-family: "Roboto Slab", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.graph .graph__content {
+  padding: 0.5rem 1rem;
+}
+
 .tabs {
   background: #494987;
 }
