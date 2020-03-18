@@ -10,6 +10,14 @@ import { BarChart } from "reaviz";
 
 function BarGraph ({stats, loading, error}) {
 
+  if (loading) {
+    return <div className="loader"></div>;
+  }
+
+  if (error) {
+    return <div><p>Something went wrong</p></div>;
+  }
+
   if (stats !== false) {
     return (
       <div style={{ margin: "55px", textAlign: "center" }}>
@@ -17,8 +25,6 @@ function BarGraph ({stats, loading, error}) {
       </div>
     ); 
   } else return null;
-
-  
 }
 
 

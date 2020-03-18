@@ -10,7 +10,13 @@ import { PieChart } from "reaviz";
 import PropTypes from 'prop-types';
 
 function PieGraph ({stats, loading, error}) {
-  console.log(stats);
+  if (loading) {
+    return <div className="loader"></div>;
+  }
+
+  if (error) {
+    return <div><p>Something went wrong</p></div>
+  }
 
   if (stats !== false) {
     return (
