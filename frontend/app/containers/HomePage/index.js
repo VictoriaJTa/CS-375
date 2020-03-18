@@ -62,7 +62,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
   return (
     <div>
         <Helmet>
-          <title>Bills</title>
+          <title>Bills | Bill Bar</title>
           <meta name="description" content="Description of Bills" />
         </Helmet>
       <Fragment>
