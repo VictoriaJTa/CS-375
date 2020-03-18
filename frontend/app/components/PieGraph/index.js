@@ -1,19 +1,21 @@
 /**
  *
- * BarGraph
+ * PieChart
  *
  */
 
 import React from "react";
-import PropTypes from 'prop-types';
-import { BarChart } from "reaviz";
+import { PieChart } from "reaviz";
 
-function BarGraph ({stats, loading, error}) {
+import PropTypes from 'prop-types';
+
+function PieGraph ({stats, loading, error}) {
+  console.log(stats);
 
   if (stats !== false) {
     return (
       <div style={{ margin: "55px", textAlign: "center" }}>
-        <BarChart width={350} height={250} data={stats.subject} />
+        <PieChart width={350} height={250} data={stats.party} />
       </div>
     ); 
   } else return null;
@@ -22,8 +24,8 @@ function BarGraph ({stats, loading, error}) {
 }
 
 
-BarGraph.propTypes = {
+PieGraph.propTypes = {
   data: PropTypes.any,
 }
 
-export default BarGraph;
+export default PieGraph;

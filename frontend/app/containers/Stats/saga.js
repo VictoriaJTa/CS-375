@@ -10,6 +10,7 @@ export function* statsSaga() {
   const requestURL = 'http://localhost:8080/stats';
   try {
     const stats = yield call(request, requestURL);
+    console.log(stats);
     yield put(statsLoaded(stats));
   } catch(error) {
     yield put(statsError(error));

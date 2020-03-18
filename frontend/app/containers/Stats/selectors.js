@@ -5,7 +5,7 @@ import { initialState } from "./reducer";
  * Direct selector to the stats state domain
  */
 
-const selectStatsDomain = state => state.stats || initialState;
+const selectStatsDomain = statState => statState.stat || initialState;
 
 /**
  * Other specific selectors
@@ -18,8 +18,19 @@ const selectStatsDomain = state => state.stats || initialState;
 const makeSelectStats = () =>
   createSelector(
     selectStatsDomain,
-    substate => substate
+    substate => substate.stats
   );
 
-export default makeSelectStats;
-export { selectStatsDomain };
+const makeSelectLoading = () =>
+    createSelector(
+      selectStatsDomain,
+      substate => substate.loading
+    );
+
+    const makeSelectError = () =>
+    createSelector(
+      selectStatsDomain,
+      substate => substate.error
+    );
+
+export { makeSelectStats, makeSelectLoading, makeSelectError };

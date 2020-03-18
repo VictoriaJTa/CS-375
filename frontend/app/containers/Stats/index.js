@@ -11,29 +11,34 @@ import { Helmet } from "react-helmet";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
 
-import BarGraph from '../../components/BarGraph';
-import PieChart from '../../components/PieChart';
+import BarGraph from '../../components/BarGraph/Loadable';
+import PieGraph from '../../components/PieGraph/Loadable';
 
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
-import makeSelectStats from "./selectors";
+import {makeSelectStats, makeSelectError, makeSelectLoading} from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 import NavBar from '../../components/NavBar';
 
 import {loadStats} from './actions';
 
-export function Stats({stats, onLoadHandler}) {
-  useInjectReducer({ key: "stats", reducer });
-  useInjectSaga({ key: "stats", saga });
+export function Stats({stats, onLoadHandler, loading, error}) {
+  useInjectReducer({ key: "stat", reducer });
+  useInjectSaga({ key: "stat", saga });
 
-  if (stats.stats == false) {
+
+  if (stats == false) {
     onLoadHandler();
   }
 
   console.log(stats);
 
-  
+  const barGraphProps = {
+    stats,
+    loading, 
+    error,
+  }
 
   return (
     <div>
@@ -43,21 +48,26 @@ export function Stats({stats, onLoadHandler}) {
         <meta name="description" content="Description of Stats" />
       </Helmet>
       <div>
-        <BarGraph />
+        <BarGraph {...barGraphProps}/>
       </div>
       <div>
-        <PieChart />
+        <PieGraph {...barGraphProps}/>
       </div>
     </div>
   );
 }
 
 Stats.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  onLoadhandler: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.any,
+  stats: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
-  stats: makeSelectStats()
+  stats: makeSelectStats(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -66,7 +76,6 @@ function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadStats());
     },
-    dispatch
   };
 }
 
