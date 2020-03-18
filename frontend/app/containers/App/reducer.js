@@ -51,14 +51,24 @@ const appReducer = (state = initialState, action) =>
                 break;
             
             case FILTER:
-                draft.fil = state.fil;
+                draft.fil = state.fil;                
                 let exist = false;
+
                 for (var i in state.fil) {
-                    if (state.fil[i] == action.fil) {
+                    let existingValue = state.fil[i];
+                    let existingKey = existingValue.substring(0, existingValue.indexOf('='));
+
+                    let actionValue = action.fil;
+                    let actionKey = actionValue.substring(0, actionValue.indexOf('='));
+                    
+                    if (existingValue == actionValue) {
                         exist = true;
                         draft.fil = draft.fil.splice(i,1);
+                    } else if (existingKey == actionKey) {
+                        draft.fil = draft.fil.splice(i,1);              
                     }
                 }
+
                 if (exist == false) {
                     state.fil.push(action.fil);
                 }
