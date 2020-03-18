@@ -14,7 +14,7 @@ function NavBar({active}) {
   const links = [
     {
       path: "/",
-      text: "Bill"
+      text: "Bills"
     },
     {
       path: "/stats",

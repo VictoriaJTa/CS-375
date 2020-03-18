@@ -49,10 +49,8 @@ export function Stats({stats, onLoadHandler, loading, error}) {
         <title>Stats</title>
         <meta name="description" content="Description of Stats" />
       </Helmet>
-      <div>
+      <div className="container-fluid">
         <BarGraph {...barGraphProps}/>
-      </div>
-      <div>
         <PieGraph {...barGraphProps}/>
       </div>
     </div>
