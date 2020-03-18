@@ -47,7 +47,7 @@ function BillList({loading, error, bills, toggleItem, onClickHandler, onClickHan
   }
 
   if (error !== false) {
-    return <p className="message">Something Went Wrong</p>;
+    return <p className="message">Hm...something went wrong. Please try again later.</p>;
   }
 
   if (bills !== false) {    

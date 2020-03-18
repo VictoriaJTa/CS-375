@@ -30,7 +30,7 @@ function FilterList({visible}) {
   };
   if (visible == true) {
     return (<div className="filter__list">
-            {/* <div className="filter__overlay"></div> */}
+            <div className="filter__overlay"></div>
             <div className="filter__menu">
               <div className="filter__title">
                 <span>Filter</span>
