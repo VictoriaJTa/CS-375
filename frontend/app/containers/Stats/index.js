@@ -11,6 +11,9 @@ import { Helmet } from "react-helmet";
 import { createStructuredSelector } from "reselect";
 import { compose } from "redux";
 
+import BarGraph from '../../components/BarGraph';
+import PieChart from '../../components/PieChart';
+
 import { useInjectSaga } from "utils/injectSaga";
 import { useInjectReducer } from "utils/injectReducer";
 import makeSelectStats from "./selectors";
@@ -38,7 +41,10 @@ export function Stats({stats, onLoadHandler}) {
         <meta name="description" content="Description of Stats" />
       </Helmet>
       <div>
-        
+        <BarGraph />
+      </div>
+      <div>
+        <PieChart />
       </div>
     </div>
   );
