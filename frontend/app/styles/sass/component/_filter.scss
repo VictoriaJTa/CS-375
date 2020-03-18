@@ -1,5 +1,4 @@
 .filter__list {
-  display: none;
   position: fixed;
   top: 0;
   width: 100%;
@@ -18,7 +17,7 @@
   .filter__menu {
     position: absolute;
     top: 0;
-    right: -275px;
+    right: 0;
     width: 275px;
     height: 100vh;
     background: #fff;
@@ -108,17 +107,25 @@
   margin-bottom: 1rem;
   margin-top: 1rem;
 
-  .filter__toggle {
+  button {    
+    background: transparent;
     position: absolute;
     top: 0.35rem;
-    right: 0;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: background 0.1s, color 0.1s;
+    right: 0;    
+    border: none;    
+    outline: none;    
 
     &:hover {
-      background: $color-primary;
-      color: #fff;
+      i {
+        background: $color-primary;
+        color: #fff;
+      }
+    }
+
+    i {
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background 0.1s, color 0.1s;
     }
   }
 
@@ -141,7 +148,7 @@
 
   &:hover {
     background: $color-primary-transparent;
-    color: $color-secondary;
+    color: $color-primary-hover;
     border-color: $color-primary;
   }
 
