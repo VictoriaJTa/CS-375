@@ -24,8 +24,5 @@ function Header({toggleSideBar}) {
   );
 }
 
-Header.propTypes = {
-  toggleSideBar: PropTypes.func,
-}
 
 export default Header;

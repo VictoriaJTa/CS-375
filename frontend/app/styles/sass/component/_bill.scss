@@ -1,155 +1,181 @@
-.bill {
-  // max-height: 180px;
-  // overflow: hidden;
-  background: #fff;
-  margin-bottom: 2.0rem;
-  border-top: 2px solid $color-secondary;
-  box-shadow: 2px 2px 4px 4px rgba(0,0,0,0.08);
-  @include box-sizing(border-box);
+.bill__list {
 
-  .bill__vote,
-  .bill__details {
-    padding: 0.75rem 1rem;
+  ul {
+    padding: 0;
   }
+  
+  .bill {    
+    background: #fff;
+    margin-bottom: 2.0rem;
+    border-top: 2px solid $color-secondary;
+    box-shadow: 2px 2px 4px 4px rgba(0,0,0,0.08);
+    @include box-sizing(border-box);
+  
+    .bill__content {
+      max-height: 180px;
+      overflow: hidden;
 
-  .bill__header {
-    .bill__title {
-      margin: 0;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid $color-gray-light;
-
-      .title__code {
-        padding-left: 0;
-        padding-bottom: 0.5rem;
-        font-family: $font-header;
-        font-size: 1.15rem;
-        font-weight: 700;    
+      .bill__vote,
+      .bill__details {
+        padding: 0.75rem 1rem;
+      }
+    
+      .bill__header {
+        .bill__title {
+          margin: 0;
+          padding: 0.75rem 1rem;
+          border-bottom: 1px solid $color-gray-light;
+    
+          .title__code {
+            padding-left: 0;
+            padding-bottom: 0.5rem;
+            font-family: $font-header;
+            font-size: 1.15rem;
+            font-weight: 700;    
+            
+            @media only screen and (min-width: $bp-md) {
+              padding-bottom: 0;
+              font-size: 1.35rem;
+            }
+          }
         
-        @media only screen and (min-width: $bp-md) {
-          padding-bottom: 0;
-          font-size: 1.35rem;
+          .title {
+            padding: 0;
+            line-height: 1.25rem;
+            font-family: $font-body;
+            font-size: 1.0rem;
+            font-weight: 700;            
+    
+            @media only screen and (min-width: $bp-md) {
+              line-height: 1.6rem;
+              font-size: 1.25rem;
+            }
+          }
+        }      
+    
+        .bill__summary {
+          margin: 0;
+          padding: 0.5rem 1rem;
+          border-bottom: 1px solid $color-gray-light;
+        }  
+      }
+    
+      .bill__vote {
+        border-bottom: 1px solid $color-gray-light;
+    
+        span {
+          &:first-child {
+            margin-right: 1.0rem;
+            text-transform: uppercase;
+            font-weight: 700; 
+          }
         }
       }
     
-      .title {
-        padding: 0;
-        line-height: 1.25rem;
-        font-family: $font-body;
-        font-size: 1.15rem;
-        font-weight: 700;            
-
-        @media only screen and (min-width: $bp-md) {
-          line-height: 1.6rem;
-          font-size: 1.25rem;
+      .bill__link {
+        a {
+          display: block;
+          position: relative;
+          background: $color-primary-transparent;          
+          color: $color-primary;          
+          padding: 0.5rem 1rem;
+          border-bottom: 1px solid $color-gray-light;
+          transition: background 0.2s, color 0.1s;
+    
+          &:hover {
+            background: rgba(75, 104, 136, 0.15);
+    
+            .link__text, .link__text:hover,
+            i, i:hover {
+              color: $color-primary-hover;
+            }
+          }
+          
+          .link__text, 
+          i {
+            display: inline-block;
+            vertical-align: middle;
+          }
+    
+          .link__text {
+            text-decoration: underline;
+            font-weight: 700;   
+          }
+    
+          i {
+            position: absolute;
+            right: 1.0rem;
+          }
         }
+      }
+    
+      .bill__details {
+        .detail {
+          margin-bottom: 0.5rem;
+    
+          @media only screen and (min-width: $bp-md) {
+            margin-bottom: 0;
+          }
+    
+          .detail__label {
+            display: block;
+            margin-right: 1.0rem;
+            text-transform: uppercase;
+            font-weight: 700;
+    
+            @media only screen and (min-width: $bp-md) {
+              display: inline-block;
+            }
+          }
+          
+          .detail__value {
+            margin-bottom: 0.5rem;
+    
+            @media only screen and (min-width: $bp-md) {
+              margin-bottom: 0;
+            }
+          }
+        }        
       }
     }      
 
-    .bill__summary {
-      margin: 0;
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid $color-gray-light;
-    }  
-  }
-
-  .bill__vote {
-    border-bottom: 1px solid $color-gray-light;
-
-    span {
-      &:first-child {
-        margin-right: 1.0rem;
-        text-transform: uppercase;
-        font-weight: 700; 
-      }
-    }
-  }
-
-  .bill__link {
-    a {
-      display: block;
+    .bill__expand {
       position: relative;
-      background: $color-primary-transparent;          
-      color: $color-primary;          
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid $color-gray-light;
 
-      &:hover {
-        background: rgba(75, 104, 136, 0.15);
-
-        .link__text, .link__text:hover,
-        i, i:hover {
-          color: $color-primary-hover;
-        }
+      .expand__fade {
+        position: absolute;
+        top: -3rem;
+        left: 0;
+        right: 0;
+        width: 100%;        
+        height: 3rem;
+        background: linear-gradient(0deg, rgba(255,255,255,1.0), rgba(255,255,255,0.0));
       }
       
-      .link__text, 
-      i {
-        display: inline-block;
-        vertical-align: middle;
-      }
+      .expand__content {
+        background: $color-primary;
+        color: #fff;  
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.2s, color 0.1s;
 
-      .link__text {
-        text-decoration: underline;
-        font-weight: 700;   
-      }
-
-      i {
-        position: absolute;
-        right: 1.0rem;
+        &:hover {
+          background: $color-primary-hover;
+          color: $color-gray-light;
+        }
+      
+        i, span {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      
+        span {
+          text-transform: uppercase;
+          font-weight: 700;    
+        }
       }
     }
-  }
-
-  .bill__details {
-    .detail {
-      margin-bottom: 0.5rem;
-
-      @media only screen and (min-width: $bp-md) {
-        margin-bottom: 0;
-      }
-
-      .detail__label {
-        display: block;
-        margin-right: 1.0rem;
-        text-transform: uppercase;
-        font-weight: 700;
-
-        @media only screen and (min-width: $bp-md) {
-          display: inline-block;
-        }
-      }
-      
-      .detail__value {
-        margin-bottom: 0.5rem;
-
-        @media only screen and (min-width: $bp-md) {
-          margin-bottom: 0;
-        }
-      }
-    }        
-  }      
-}
-
-.bill__expand {
-  background: $color-primary;
-  color: #fff;  
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  text-align: center;
-  cursor: pointer;
-
-  &:hover {
-    background: $color-primary-hover;
-    color: $color-gray-light;
-  }
-
-  i, span {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  span {
-    text-transform: uppercase;
-    font-weight: 700;    
   }
 }

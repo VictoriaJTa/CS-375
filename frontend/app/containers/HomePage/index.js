@@ -12,13 +12,11 @@ import { createStructuredSelector } from 'reselect';
 import {makeSelectBills, makeSelectBillLoading, makeSelectBillError, makeSelectFilter} from '../App/selectors';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import messages from './messages';
-import BillList from '../../components/BillList'
-import FilterList from '../../components/FilterList';
-import NavBar from '../../components/NavBar';
+import BillList from '../../components/BillList';
+import Filter from '../../components/Filter';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
 import { loadBill, toggleFilterList } from '../App/action';
@@ -41,14 +39,15 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
   }
 
   return (
-    <div>
-      <Fragment>
-        <FilterList/>
-        <div className="container-fluid">  
-          <BillList {...billListProps}/>
+    <div className="container-fluid">
+        <div className="row filter__applied">
+          {/* Insert filters here */}
         </div>
-      </Fragment>
-    </div>
+
+        <div className="bill__list">
+          <BillList {...billListProps} />
+        </div>        
+      </div>
   );
 }
 

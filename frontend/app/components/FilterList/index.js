@@ -14,7 +14,7 @@ export default class FilterList extends React.Component {
         },
         {
           name: 'party',
-          filters: [ 'Republican', 'Democrat', 'Independent' ]
+          filters: [ 'Republican', 'Democratic', 'Independent' ]
         },
         {
           name: 'chamber',
