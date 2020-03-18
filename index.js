@@ -154,7 +154,7 @@ app.get('/stats', function(req, res) {
 						for (let i=0; i<rows.length; i++) {
 							let row = rows[i];
 
-							data.party.push({ party: row.party, count: row.partyCount });
+							data.party.push({ key: row.party, data: row.partyCount });
 						}
 
 						statmod.voteResult(conn, function(value, rows) {
@@ -198,7 +198,7 @@ app.get('/stats', function(req, res) {
 												for (let i=0; i<rows.length; i++) {
 													let row = rows[i];
 
-													data.subject.push({ subject: row.primarySubject,  count: row.billCount });
+													data.subject.push({ key: row.primarySubject,  data: row.billCount });
 												}
 
 												statmod.release(conn);
