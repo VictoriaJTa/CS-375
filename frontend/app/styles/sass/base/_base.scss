@@ -7,6 +7,16 @@ body, p, label {
   font-family: $font-body;
 }
 
+.container-fluid {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  @media only screen and (min-width: $bp-md) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
 .row {
   max-width: $bp-md;
   margin: 0 auto;

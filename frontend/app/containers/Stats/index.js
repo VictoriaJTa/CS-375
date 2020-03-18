@@ -49,7 +49,7 @@ export function Stats({stats, onLoadHandler, loading, error}) {
         <title>Stats</title>
         <meta name="description" content="Description of Stats" />
       </Helmet>
-      <div className="container-fluid">
+      <div className="container-fluid graph__container">
         <BarGraph {...barGraphProps}/>
         <PieGraph {...barGraphProps}/>
       </div>
