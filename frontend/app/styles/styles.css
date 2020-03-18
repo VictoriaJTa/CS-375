@@ -10124,9 +10124,9 @@ i:hover {
 }
 
 header {
+  position: relative;
   background: #494987;
-  -webkit-box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.08);
-          box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.08);
+  z-index: 500;
 }
 
 header .header__title {
@@ -10151,6 +10151,8 @@ header .header__title h1 {
 nav {
   background: #494987;
   margin-bottom: 1rem;
+  -webkit-box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.08);
 }
 
 .bill__list ul {
@@ -10172,8 +10174,7 @@ nav {
   overflow: hidden;
 }
 
-.bill__list .bill .bill__content .bill__vote,
-.bill__list .bill .bill__content .bill__details {
+.bill__list .bill .bill__content .bill__vote {
   padding: 0.75rem 1rem;
 }
 
@@ -10263,6 +10264,10 @@ nav {
 .bill__list .bill .bill__content .bill__link a i {
   position: absolute;
   right: 1.0rem;
+}
+
+.bill__list .bill .bill__content .bill__details {
+  padding: 0.75rem 1rem 2rem;
 }
 
 .bill__list .bill .bill__content .bill__details .detail {
@@ -10446,8 +10451,8 @@ nav {
 .filter__applied {
   position: relative;
   padding-top: 1.0rem;
-  padding-bottom: 1.25rem;
-  padding-right: 1.25rem;
+  padding-bottom: 1.75rem;
+  padding-right: 2.25rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
@@ -10456,10 +10461,15 @@ nav {
   position: absolute;
   top: 0.35rem;
   right: 0;
+  padding: 0.5rem;
+  border-radius: 50%;
+  -webkit-transition: background 0.1s, color 0.1s;
+  transition: background 0.1s, color 0.1s;
 }
 
 .filter__applied .filter__toggle:hover {
-  color: #494987;
+  background: #494987;
+  color: #fff;
 }
 
 .filter__applied .filter {
@@ -10583,6 +10593,7 @@ nav {
 .message {
   text-align: center;
   font-style: italic;
-  font-weight: 500;
+  font-size: 1.35rem;
+  font-weight: 700;
 }
 /*# sourceMappingURL=styles.css.map */

@@ -20,13 +20,14 @@ import FilterList from '../../components/FilterList';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
 import { loadBill, toggleFilterList, loadMore, loadLess } from '../App/action';
+
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
 
 
 const key = 'global';
 
-export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, filterOpen, onClickHandler, onClickHandlerLess}) {
+export function HomePage({loading, error, bills, onLoadHandler, toggleItem, toggleFilter, filterOpen, onClickHandler, onClickHandlerLess}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
@@ -34,6 +35,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
     loading,
     error,
     bills,
+    toggleItem,
     onClickHandler,
     onClickHandlerLess
   }
@@ -46,9 +48,10 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, fi
     <Fragment>
       <NavBar active="0" />      
       <div className="container-fluid">
-        <div className="row filter__applied">
-          <i className="material-icons filter__toggle">tune</i>
+        <div className="row filter__applied">          
           {/* Insert filters here */}
+
+          <i className="material-icons filter__toggle">tune</i>
         </div>
 
         <div className="bill__list">
@@ -65,6 +68,7 @@ HomePage.propTypes = {
   error: PropTypes.any,
   bills: PropTypes.any,
   onLoadHandler: PropTypes.func,
+  onClickHandler: PropTypes.func,
   toggleFilter: PropTypes.func,
   filterOpen: PropTypes.bool,
   onClickhandler: PropTypes.func,
@@ -83,6 +87,13 @@ export function mapDispatchToProps(dispatch) {
     onLoadHandler: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadBill());
+    },
+    onClickHandler: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      
+      const target = evt.target;
+      let expand = target.closest('.expand__content');
+      console.log(expand);
     },
     toggleFilter: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();
