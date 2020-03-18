@@ -48,14 +48,14 @@ export function Stats({stats, onLoadHandler, loading, error}) {
   let prevMonth = prevDate.getMonth();
   prevDate.setMonth(prevMonth - 1);
   
-  if (prevDate.getMonth == prevMonth) {
+  if (prevDate.getMonth() == prevMonth) {
     prevDate.setDate(0);
   }
 
   prevDate.setHours(0, 0, 0);
   prevDate.setMilliseconds(0);
 
-  let month = months[prevMonth];
+  let month = months[prevDate.getMonth()];
   let day = prevDate.getDate() + 1;
   day = day < 10 ? `0${day}` : day;
   let year = prevDate.getFullYear();
