@@ -19,7 +19,7 @@ import BillList from '../../components/BillList';
 import FilterList from '../../components/FilterList';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
-import { loadBill, toggleFilterList } from '../App/action';
+import { loadBill, toggleFilterList, loadMore, loadLess } from '../App/action';
 import { Fragment } from 'react';
 import NavBar from '../../components/NavBar';
 

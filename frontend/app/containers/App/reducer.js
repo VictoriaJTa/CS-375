@@ -41,8 +41,12 @@ const appReducer = (state = initialState, action) =>
                 break;
             
             case LOAD_LESS:
-                draft.page = state.page;
-                draft.page -= 1;
+                if (state.page == 0) {
+                    draft.page = 0;
+                } else {
+                    draft.page = state.page;
+                    draft.page -= 1;
+                }
                 break;
 
         }
