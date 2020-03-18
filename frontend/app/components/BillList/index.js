@@ -11,13 +11,14 @@ import List from "../List";
 import styled from 'styled-components';
 
 const Button = styled.button`
-color: purple;
+  display: inline-block;
+  background: transparent;
+  border: none;
+  outline: none;  
 `;
 
 const Wrapper = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+  padding-bottom: 2rem;
 `;
 
 function BillList({loading, error, bills, toggleItem, onClickHandler, onClickHandlerLess}) {
@@ -26,10 +27,21 @@ function BillList({loading, error, bills, toggleItem, onClickHandler, onClickHan
   }
   if (bills !== false) {
     return <div>
-              <List items={bills} component={Bill}/>
-              <Wrapper>
-                <Button onClick={onClickHandlerLess}>Previous Page</Button>
-                <Button onClick={onClickHandler}>Next Page</Button>
+              <List items={bills} component={Bill} toggleItem={toggleItem} />
+              <Wrapper className="row no-gutters pagination">
+                <div className="col-6">
+                  <Button onClick={onClickHandlerLess}>
+                    <i className="material-icons">arrow_left</i>
+                    <span>Previous Page</span>
+                  </Button>
+                </div>
+
+                <div className="col-6">
+                  <Button onClick={onClickHandler}>                  
+                    <span>Next Page</span>
+                    <i className="material-icons">arrow_right</i>
+                  </Button>
+                </div>
               </Wrapper>
             </div>;
   }

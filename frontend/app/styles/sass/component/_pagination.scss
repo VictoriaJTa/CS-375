@@ -1,0 +1,21 @@
+.pagination {
+  > div:last-child {
+    text-align: right;
+  }
+
+  button {
+    &:hover {
+      color: $color-primary-hover;
+    }
+
+    span, 
+    i {
+      display: inline-block;
+      vertical-align: middle;      
+    }
+
+    span {
+      font-weight: 700;
+    }
+  }  
+}

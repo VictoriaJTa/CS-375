@@ -32,6 +32,7 @@ function List(props) {
 List.propTypes = {
   component: PropTypes.elementType.isRequired,
   items: PropTypes.array,
+  toggleItem: PropTypes.func,
   onClickHandler: PropTypes.func,
 };
 
