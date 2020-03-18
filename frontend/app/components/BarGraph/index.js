@@ -10,21 +10,20 @@ import { BarChart } from "reaviz";
 
 function BarGraph ({stats, loading, error}) {
 
-  if (loading) {
-    return <div className="loader"></div>;
-  }
-
-  if (error) {
-    return <div><p>Something went wrong</p></div>;
-  }
-
   if (stats !== false) {
     return (
-      <div style={{ margin: "55px", textAlign: "center" }}>
-        <BarChart width={350} height={250} data={stats.subject} />
+      <div>
+        <div style={{ margin: "55px", textAlign: "center" }}>
+          <BarChart width={350} height={250} data={stats.subject} />
+        </div>
+        <div style={{ margin: "55px", textAlign: "center" }}>
+          <BarChart width={350} height={250} data={stats.vote_result} />
+        </div>
       </div>
     ); 
   } else return null;
+
+  
 }
 
 

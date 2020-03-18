@@ -32,8 +32,6 @@ export function Stats({stats, onLoadHandler, loading, error}) {
     onLoadHandler();
   }
 
-  console.log(stats);
-
   const barGraphProps = {
     stats,
     loading, 
