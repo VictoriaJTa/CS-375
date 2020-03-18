@@ -10398,8 +10398,8 @@ nav {
   padding-bottom: 0.25rem;
   text-align: center;
   cursor: pointer;
-  -webkit-transition: background 0.2s, color 0.1s;
-  transition: background 0.2s, color 0.1s;
+  -webkit-transition: background 0.1s, color 0.1s;
+  transition: background 0.1s, color 0.1s;
 }
 
 .bill__list .bill .bill__expand .expand__content:hover {
