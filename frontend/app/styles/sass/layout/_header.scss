@@ -1,6 +1,7 @@
 header {
-  background: $color-primary;
-  box-shadow: 0 2px 4px 4px rgba(0,0,0,0.08);
+  position: relative;
+  background: $color-primary;  
+  z-index: 500;
 
   .header__title {
     position: relative;
