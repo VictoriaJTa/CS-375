@@ -147,7 +147,10 @@ export function mapDispatchToProps(dispatch) {
 
       window.scrollTo(0, 0);
     },
-    toggleItem: evt => dispatch(changeFilter(evt.target.value)),
+    toggleItem: evt => {
+      let value = evt.target.closest('.filter').getAttribute('value');
+      dispatch(changeFilter(value));
+    },
   };
 }
 
