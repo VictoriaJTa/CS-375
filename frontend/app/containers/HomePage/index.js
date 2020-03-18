@@ -90,9 +90,11 @@ export function mapDispatchToProps(dispatch) {
     },
     onClickHandler: evt => {
       dispatch(loadMore());
+      window.scrollTo(0, 0);
     },
     onClickHandlerLess: evt => {
       dispatch(loadLess());
+      window.scrollTo(0, 0);
     }
   };
 }

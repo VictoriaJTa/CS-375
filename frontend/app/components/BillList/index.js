@@ -21,6 +21,9 @@ justify-content: space-between;
 `;
 
 function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
+  if (loading) {
+    return <div className="loader"></div>;
+  }
   if (bills !== false) {
     return <div>
               <List items={bills} component={Bill}/>
@@ -31,9 +34,7 @@ function BillList({loading, error, bills, onClickHandler, onClickHandlerLess}) {
             </div>;
   }
 
-  if (loading) {
-    return <div className="loader"></div>;
-  }
+
 
   if (error !== false) {
     return <p className="message">Something Went Wrong</p>;
