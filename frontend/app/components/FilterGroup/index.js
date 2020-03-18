@@ -2,7 +2,7 @@ import React from 'react'
 import Filter from '../Filter'
 import { Fragment } from 'react'
 
-function FilterList({name, filters}) {
+function FilterGroup({name, filters}) {
   return (
     <Fragment>
       <div className="filter__type">{name}</div>
@@ -16,4 +16,4 @@ function FilterList({name, filters}) {
   );
 }
 
-export default FilterList;
+export default FilterGroup;
