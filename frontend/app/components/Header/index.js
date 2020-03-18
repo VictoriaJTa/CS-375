@@ -6,7 +6,6 @@
 
 import React from "react";
 import NavBar from "../NavBar";
-import Sidebar from "react-sidebar";
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 

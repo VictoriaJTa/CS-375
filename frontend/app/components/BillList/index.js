@@ -12,7 +12,7 @@ import List from "../List";
 
 function BillList({loading, error, bills}) {
   if (loading) {
-    return <p className="message">Loading 99%...</p>;
+    return <div className="loader"></div>;
   }
 
   if (error !== false) {

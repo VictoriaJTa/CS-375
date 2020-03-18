@@ -24,6 +24,7 @@ export default function App() {
   return (
     <div>
       <Header />
+      <FilterList />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/stats" component={Stats}/>
