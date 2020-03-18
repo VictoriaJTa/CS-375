@@ -36,4 +36,10 @@ const makeSelectFilter = () =>
     globalState => globalState.filter,
   )
 
-export { makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError, makeSelectFilter };
+const makeSelectPage = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.page,
+  )
+
+export {makeSelectPage, makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError, makeSelectFilter };

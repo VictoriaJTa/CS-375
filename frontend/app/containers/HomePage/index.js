@@ -19,19 +19,21 @@ import BillList from '../../components/BillList';
 import Filter from '../../components/Filter';
 import reducer from '../App/reducer';
 import saga from '../App/saga';
-import { loadBill, toggleFilterList } from '../App/action';
+import { loadBill, toggleFilterList, loadMore, loadLess } from '../App/action';
 
 
 const key = 'global';
 
-export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, filterOpen}) {
+export function HomePage({loading, error, bills, onLoadHandler, toggleFilter, filterOpen, onClickHandler, onClickHandlerLess}) {
   useInjectReducer({key, reducer});
   useInjectSaga({key, saga});
 
   const billListProps = {
     loading,
     error,
-    bills
+    bills,
+    onClickHandler,
+    onClickHandlerLess
   }
 
   if (bills == false) {
@@ -59,6 +61,8 @@ HomePage.propTypes = {
   onLoadHandler: PropTypes.func,
   toggleFilter: PropTypes.func,
   filterOpen: PropTypes.bool,
+  onClickhandler: PropTypes.func,
+  onClickHandlerLess: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -77,6 +81,12 @@ export function mapDispatchToProps(dispatch) {
     toggleFilter: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();
       dispatch(toggleFilterList);
+    },
+    onClickHandler: evt => {
+      dispatch(loadMore());
+    },
+    onClickHandlerLess: evt => {
+      dispatch(loadLess());
     }
   };
 }
