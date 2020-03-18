@@ -104,7 +104,21 @@ export function mapDispatchToProps(dispatch) {
       
       const target = evt.target;
       let expand = target.closest('.expand__content');
-      console.log(expand);
+      let content = expand.parentNode.previousSibling;
+
+      if (expand.classList.contains('active')) {
+        expand.classList.remove('active');
+        expand.querySelector('.expand__inactive').style.display = 'block';
+        expand.querySelector('.expand__active').style.display = 'none';
+
+        content.style.maxHeight = '180px';
+      } else {
+        expand.classList.add('active');
+        expand.querySelector('.expand__inactive').style.display = 'none';
+        expand.querySelector('.expand__active').style.display = 'block';
+
+        content.style.maxHeight = 'none';
+      }            
     },
     toggleFilterHandler: evt => {
       if (evt !== undefined && evt.preventDeafult) evt.preventDeafult();

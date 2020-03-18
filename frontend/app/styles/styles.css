@@ -10216,7 +10216,8 @@ nav {
 
 .bill__list .bill .bill__content .bill__header .bill__summary {
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 3rem 0.5rem 1rem;
+  text-indent: 2rem;
   border-bottom: 1px solid #E5E5E5;
 }
 
@@ -10334,6 +10335,19 @@ nav {
   color: #E5E5E5;
 }
 
+.bill__list .bill .bill__expand .expand__content.active {
+  background: #E5E5E5;
+  color: #15212D;
+}
+
+.bill__list .bill .bill__expand .expand__content.active:hover {
+  background: #fff;
+}
+
+.bill__list .bill .bill__expand .expand__content.active .expand__active {
+  display: block;
+}
+
 .bill__list .bill .bill__expand .expand__content i, .bill__list .bill .bill__expand .expand__content span {
   display: inline-block;
   vertical-align: middle;
@@ -10342,6 +10356,10 @@ nav {
 .bill__list .bill .bill__expand .expand__content span {
   text-transform: uppercase;
   font-weight: 700;
+}
+
+.bill__list .bill .bill__expand .expand__content .expand__active {
+  display: none;
 }
 
 .filter__list {
@@ -10594,6 +10612,24 @@ nav {
   text-align: center;
   font-style: italic;
   font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.pagination > div:last-child {
+  text-align: right;
+}
+
+.pagination button:hover {
+  color: #6060AC;
+}
+
+.pagination button span,
+.pagination button i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pagination button span {
   font-weight: 700;
 }
 /*# sourceMappingURL=styles.css.map */

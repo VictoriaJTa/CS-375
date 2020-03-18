@@ -54,7 +54,8 @@
     
         .bill__summary {
           margin: 0;
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 3rem 0.5rem 1rem;
+          text-indent: 2rem;
           border-bottom: 1px solid $color-gray-light;
         }  
       }
@@ -166,6 +167,19 @@
           background: $color-primary-hover;
           color: $color-gray-light;
         }
+
+        &.active {          
+          background: #E5E5E5;
+          color: #15212D;      
+          
+          &:hover {
+            background: #fff;
+          }
+
+          .expand__active {
+            display: block;
+          }
+        }
       
         i, span {
           display: inline-block;
@@ -175,6 +189,10 @@
         span {
           text-transform: uppercase;
           font-weight: 700;    
+        }
+
+        .expand__active {
+          display: none;          
         }
       }
     }
