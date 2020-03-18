@@ -15,15 +15,28 @@ function FilterList({visible, toggleFilterHandler, toggleItem}) {
     filters: [
       {
         name: 'status',
-        filters: [ 'introduced', 'active', 'passed', 'enacted', 'vetoed' ]
+        filters: [ 
+          { key: 'introduced', value: 'status=introduced' }, 
+          { key: 'active', value: 'status=active' },
+          { key: 'passed', value: 'status=passed' },
+          { key: 'enacted', value: 'status=enacted' },
+          { key: 'vetoed', value: 'status=vetoed' }
+        ]
       },
       {
         name: 'party',
-        filters: [ 'Republican', 'Democratic', 'Independent' ]
+        filters: [ 
+          { key: 'Republican', value: 'party=r' },
+          { key: 'Democratic', value: 'party=d' },
+          { key: 'Independent', value: 'party=i' }
+        ]
       },
       {
         name: 'chamber',
-        filters: [ 'H.R. (House)', 'Senate' ]
+        filters: [ 
+          { key: 'H.R. (House)', value: 'chamber=house'},
+          { key: 'Senate', value: 'chamber=senate'}
+        ]
       }
     ]
   };
