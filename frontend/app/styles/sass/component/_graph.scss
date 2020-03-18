@@ -1,0 +1,18 @@
+.graph {
+  background: #fff;
+  max-width: 400px;
+  margin-bottom: 2.0rem;
+  box-shadow: 2px 2px 4px 4px rgba(0,0,0,0.08);
+
+  .graph__title {
+    padding: 0.5rem 1.0rem;
+    font-family: $font-header;
+    font-size: 1.15rem;    
+    font-weight: 700;
+    border-bottom: 1px solid $color-gray-light;
+  }
+
+  .graph__content {
+    padding: 0.5rem 1rem;
+  }
+}
