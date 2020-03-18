@@ -5,12 +5,12 @@
  */
 
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import FilterGroup from '../FilterGroup';
 
 
-function FilterList({visible, toggleFilterHandler}) {
+function FilterList({visible, toggleFilterHandler, toggleItem}) {
   const stuff = {
     filters: [
       {
@@ -50,7 +50,7 @@ function FilterList({visible, toggleFilterHandler}) {
               </div>
 
               {stuff.filters.map((value, index) => {       
-                return <FilterGroup key={index} name={value.name} filters={value.filters} />
+                return <FilterGroup key={index} name={value.name} filters={value.filters} toggleItem={toggleItem}/>
               })}
             </div>
           </div>);
@@ -59,6 +59,10 @@ function FilterList({visible, toggleFilterHandler}) {
   }
 }
 
-FilterList.propTypes = {};
+FilterList.propTypes = {
+  visible: PropTypes.bool,
+  toggleFilterHandler: PropTypes.func,
+  toggleItem: PropTypes.func,
+};
 
 export default FilterList;

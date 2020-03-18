@@ -17,26 +17,5 @@ Filter.propTypes = {
   toggleItem: PropTypes.func,
 }
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    toggleItem: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      
-      let target = evt.target.closest('.filter');
-      
-      if (target.classList.contains('active')) {
-        target.classList.remove('active');
-      } else {
-        target.classList.add('active');
-      }
-    },
-  };
-}
 
-const withConnect = connect (
-  mapDispatchToProps,
-);
-
-export default compose (
-  withConnect
-)(Filter);
+export default Filter

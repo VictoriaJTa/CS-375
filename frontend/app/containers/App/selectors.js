@@ -42,10 +42,9 @@ const makeSelectPage = () =>
     globalState => globalState.page,
   )
 
-  const makeSelectFil = () => {
+  const makeSelectFil = () =>
     createSelector(
       selectGlobal,
       globalState => globalState.fil,
-    );
-  }
+    )
 export {makeSelectPage, makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError, makeSelectFilter, makeSelectFil };

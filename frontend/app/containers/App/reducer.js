@@ -6,7 +6,7 @@ export const initialState = {
     bills:false,
     filter: false,
     page: 0,
-    fil: '',
+    fil: [],
 }
 
 const appReducer = (state = initialState, action) =>
@@ -51,7 +51,17 @@ const appReducer = (state = initialState, action) =>
                 break;
             
             case FILTER:
-                draft.fil = action.fil;
+                draft.fil = state.fil;
+                let exist = false;
+                for (var i in state.fil) {
+                    if (state.fil[i] == action.fil) {
+                        exist = true;
+                        draft.fil = draft.fil.splice(i,1);
+                    }
+                }
+                if (exist == false) {
+                    state.fil.push(action.fil);
+                }
                 break;
         }
     });

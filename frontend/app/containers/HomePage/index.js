@@ -51,6 +51,7 @@ export function HomePage({loading, error, bills, onLoadHandler, toggleItem, togg
     visible,
     toggleFilterHandler,
     blahHandler,
+    toggleItem,
   }
 
   if (bills == false) {
@@ -145,7 +146,8 @@ export function mapDispatchToProps(dispatch) {
       }
 
       window.scrollTo(0, 0);
-    }
+    },
+    toggleItem: evt => dispatch(changeFilter(evt.target.value)),
   };
 }
 
