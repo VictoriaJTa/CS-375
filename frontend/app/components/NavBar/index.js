@@ -28,9 +28,9 @@ function NavBar({active}) {
     let link = links[i];
     
     if (i == active) {
-      generatedLinks.push(<Link to={link.path} className="col-6 tab active">{link.text}</Link>);
+      generatedLinks.push(<Link key={i} to={link.path} className="col-6 tab active">{link.text}</Link>);
     } else {
-      generatedLinks.push(<Link to={link.path} className="col-6 tab">{link.text}</Link>);
+      generatedLinks.push(<Link key={i} to={link.path} className="col-6 tab">{link.text}</Link>);
     }
   }
 
