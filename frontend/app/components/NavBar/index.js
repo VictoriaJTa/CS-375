@@ -12,7 +12,7 @@ function NavBar() {
   return (
     <div className="row tabs">
       <Link to="/" className="col-6 tab active">Bill</Link>
-      <Link to="stats" className="col-6 tab">Stats</Link>
+      <Link to="/stats" className="col-6 tab">Stats</Link>
     </div>
   );
 }

@@ -30,4 +30,10 @@ createSelector(
   globalState => globalState.error,
 )
 
-export { makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError };
+const makeSelectFilter = () => 
+  createSelector(
+    selectGlobal,
+    globalState => globalState.filter,
+  )
+
+export { makeSelectLocation, makeSelectBills, makeSelectBillLoading, makeSelectBillError, makeSelectFilter };

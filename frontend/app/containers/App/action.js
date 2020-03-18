@@ -1,4 +1,4 @@
-import { LOAD_BILL, LOAD_BILL_SUCCESS, LOAD_BILL_ERROR } from "./constants";
+import { LOAD_BILL, LOAD_BILL_SUCCESS, LOAD_BILL_ERROR, TOGGLE_FILTER } from "./constants";
 
 export function loadBill() {
     return {
@@ -18,4 +18,10 @@ export function billError(error) {
         type: LOAD_BILL_ERROR,
         error,
     };
+}
+
+export function toggleFilterList() {
+    return {
+        type: TOGGLE_FILTER,
+    }
 }

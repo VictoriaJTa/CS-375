@@ -9,7 +9,7 @@ import NavBar from "../NavBar";
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-function Header() {
+function Header({toggleSideBar}) {
   return (
     <header className="container-fluid">
       <div className="row header__title">
@@ -24,5 +24,8 @@ function Header() {
   );
 }
 
+Header.propTypes = {
+  toggleSideBar: PropTypes.func,
+}
 
 export default Header;
